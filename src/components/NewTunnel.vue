@@ -1,22 +1,23 @@
 <template>
     <div class="flex-1">
         <div class="flex flex-col h-screen">
+            <form @submit.prevent="handleSubmit" class="flex flex-col h-screen">
             <div class="pt-3 pr-5 pb-5 pl-5 border-b border-dashed">
                 <h2 class="text-sm font-medium mb-3">Name</h2>
                 <div class="flex flex-row items-center">
-                    <input class="border px-2 py-1 rounded w-48 text-sm" type="text" placeholder="Tunnel name">
+                    <input class="border px-2 py-1 rounded w-48 text-sm" type="text" placeholder="Tunnel name" v-model="name">
                 </div>
             </div>
             <div class="pt-3 pr-5 pb-5 pl-5 border-b border-dashed">
                 <h2 class="text-sm font-medium mb-3">Connection Details</h2>
                 <div class="flex flex-row items-center">
-                    <input class="border px-2 py-1 rounded w-24 flex-none text-sm" type="text" placeholder="Username">
+                    <input class="border px-2 py-1 rounded w-24 flex-none text-sm" type="text" placeholder="Username" v-model="username">
                     <span class="mx-1">@</span>
                     <input class="border px-2 py-1 rounded w-48 flex-auto text-sm" type="text"
-                           placeholder="IP Address or hostname">
+                           placeholder="IP Address or hostname" v-model="hostname">
                     <span class="mx-1">:</span>
                     <input class="border px-2 py-1 rounded w-20 text-sm" type="number" placeholder="Port"
-                           value="22">
+                           value="22" v-model="port">
                 </div>
             </div>
             <div class="pt-3 pr-5 pb-5 pl-5 border-b border-dashed">
@@ -67,14 +68,15 @@
                 </div>
             </div>
 
+
             <div class="flex-grow"></div>
             <div class="bg-gray-200 px-5 text-white h-10 flex flex-col">
                 <div class="flex flex-row-reverse items-center flex-grow">
-                    <button class="font-medium text-xs shadow rounded py-1 px-5 bg-gray-100 text-blue-500">Create
-                    </button>
+                    <button class="font-medium text-xs shadow rounded py-1 px-5 bg-gray-100 text-blue-500">Create</button>
                     <router-link tag="button" class="mx-1 font-medium text-xs shadow rounded py-1 px-5 bg-gray-100 text-gray-500" to="/">Cancel</router-link>
                 </div>
             </div>
+            </form>
         </div>
     </div>
 </template>
@@ -82,6 +84,21 @@
 <script>
     export default {
         name: 'NewTunnel',
-        props: {}
+        data() {
+            return {
+                name: "",
+                username: "",
+                hostname: "",
+                port: ""
+            }
+        },
+        methods: {
+            handleSubmit() {
+                console.log(this.$store.commit('addTunnel', {
+                    name: this.name,
+                    status: "Connecting"
+                }))
+            }
+        }
     }
 </script>

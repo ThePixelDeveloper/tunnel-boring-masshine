@@ -17,11 +17,8 @@ export default new Vuex.Store({
     }],
   },
   mutations: {
-    addTunnel (state) {
-      state.tunnels.push({
-        name: "Tunnel",
-        status: "Connected"
-      })
+    addTunnel (state, payload) {
+      state.tunnels.push(payload)
     }
   },
   computed: mapState([
