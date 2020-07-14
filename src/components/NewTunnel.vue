@@ -3,18 +3,18 @@
         <div class="flex flex-col overflow-y-auto h-screen">
             <form @submit.prevent="handleSubmit" class="flex flex-col">
             <div class="pt-3 pr-5 pb-5 pl-5 border-b border-dashed">
-                <h2 class="text-sm font-medium mb-3">Name</h2>
-                <div class="flex-row">
-                    <input class="border px-2 py-1 rounded w-48 text-sm" type="text" placeholder="Tunnel name" v-model="name">
-                </div>
-                <div class="flex-row mt-2">
-                    <span class="text-red-600 text-sm">The tunnel name is required.</span>
-                </div>
+                    <h2 class="text-sm font-medium mb-3">Name</h2>
+                    <div class="flex-row">
+                        <input class="border px-2 py-1 rounded w-48 text-sm" type="text" placeholder="Tunnel name" v-model="name">
+                    </div>
+                    <div class="flex-row mt-2" v-if="!$v.name.required && $v.name.$error">
+                        <span class="text-red-600 text-sm">The tunnel name is required.</span>
+                    </div>
             </div>
             <div class="pt-3 pr-5 pb-5 pl-5 border-b border-dashed">
-                <h2 class="text-sm font-medium mb-3">Connection Details</h2>
+                <h2 class="text-sm font-medium mb-3">SSH Connection Details</h2>
                 <div class="flex flex-row items-center">
-                    <input class="border px-2 py-1 rounded w-24 flex-none text-sm" type="text" placeholder="Username" v-model="username">
+                    <input class="border px-2 py-1 rounded w-48 flex-none text-sm" type="text" placeholder="Username" v-model="username">
                     <span class="mx-1">@</span>
                     <input class="border px-2 py-1 rounded w-48 flex-auto text-sm" type="text"
                            placeholder="IP Address or hostname" v-model="hostname">
@@ -23,10 +23,10 @@
                            value="22" v-model="port">
                 </div>
                 <div class="flex-row mt-2">
-                    <ul class="list-inside list-disc text-red-600">
-                        <li><span class="text-sm">The username is required.</span></li>
-                        <li><span class="text-sm">The IP address/hostname is required.</span></li>
-                        <li><span class="text-sm">The port is required.</span></li>
+                    <ul class="list-inside list-disc text-red-600" v-if="$v.username.$error||$v.hostname.$error||$v.port.$error">
+                        <li v-if="!$v.username.required"><span class="text-sm">The username is required.</span></li>
+                        <li v-if="!$v.hostname.required"><span class="text-sm">The IP address/hostname is required.</span></li>
+                        <li v-if="!$v.port.required"><span class="text-sm">The port is required.</span></li>
                     </ul>
                 </div>
             </div>
@@ -77,7 +77,7 @@
                     </div>
                 </div>
                 <div class="flex-row mt-2">
-                    <ul class="list-inside list-disc text-red-600">
+                    <ul class="list-inside list-disc text-red-600" v-if="$v.username.error">
                         <li><span class="text-sm">The bind address is required.</span></li>
                         <li><span class="text-sm">The bind port is required.</span></li>
                         <li><span class="text-sm">The target address is required.</span></li>
@@ -100,6 +100,8 @@
 </template>
 
 <script>
+    import {required} from "vuelidate/lib/validators";
+
     export default {
         name: 'NewTunnel',
         data() {
@@ -107,15 +109,35 @@
                 name: "",
                 username: "",
                 hostname: "",
-                port: ""
+                port: 22
+            }
+        },
+        validations: {
+            name: {
+                required
+            },
+            username: {
+                required
+            },
+            hostname: {
+                required
+            },
+            port: {
+                required
             }
         },
         methods: {
             handleSubmit() {
-                console.log(this.$store.commit('addTunnel', {
+                this.$v.$touch()
+
+                if (this.$v.$invalid) {
+                    return;
+                }
+
+                this.$store.commit('addTunnel', {
                     name: this.name,
-                    status: "Connecting"
-                }))
+                    status: "Disconnected"
+                })
             }
         }
     }
