@@ -1,11 +1,14 @@
 <template>
     <div class="flex-1">
-        <div class="flex flex-col h-screen">
-            <form @submit.prevent="handleSubmit" class="flex flex-col h-screen">
+        <div class="flex flex-col overflow-y-auto h-screen">
+            <form @submit.prevent="handleSubmit" class="flex flex-col">
             <div class="pt-3 pr-5 pb-5 pl-5 border-b border-dashed">
                 <h2 class="text-sm font-medium mb-3">Name</h2>
-                <div class="flex flex-row items-center">
+                <div class="flex-row">
                     <input class="border px-2 py-1 rounded w-48 text-sm" type="text" placeholder="Tunnel name" v-model="name">
+                </div>
+                <div class="flex-row mt-2">
+                    <span class="text-red-600 text-sm">The tunnel name is required.</span>
                 </div>
             </div>
             <div class="pt-3 pr-5 pb-5 pl-5 border-b border-dashed">
@@ -18,6 +21,13 @@
                     <span class="mx-1">:</span>
                     <input class="border px-2 py-1 rounded w-20 text-sm" type="number" placeholder="Port"
                            value="22" v-model="port">
+                </div>
+                <div class="flex-row mt-2">
+                    <ul class="list-inside list-disc text-red-600">
+                        <li><span class="text-sm">The username is required.</span></li>
+                        <li><span class="text-sm">The IP address/hostname is required.</span></li>
+                        <li><span class="text-sm">The port is required.</span></li>
+                    </ul>
                 </div>
             </div>
             <div class="pt-3 pr-5 pb-5 pl-5 border-b border-dashed">
@@ -65,6 +75,14 @@
                                placeholder="Port"
                                type="number">
                     </div>
+                </div>
+                <div class="flex-row mt-2">
+                    <ul class="list-inside list-disc text-red-600">
+                        <li><span class="text-sm">The bind address is required.</span></li>
+                        <li><span class="text-sm">The bind port is required.</span></li>
+                        <li><span class="text-sm">The target address is required.</span></li>
+                        <li><span class="text-sm">The target port is required.</span></li>
+                    </ul>
                 </div>
             </div>
 

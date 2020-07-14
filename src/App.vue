@@ -1,10 +1,8 @@
 <template>
-    <div id="app">
-        <div class="flex flex-row">
+        <div id="app" class="flex flex-row">
             <Sidebar></Sidebar>
             <router-view class="flex-grow"></router-view>
         </div>
-    </div>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-            <div class="w-48 flex flex-col border-r h-screen bg-gray-100">
+            <div class="w-48 flex flex-col border-r bg-gray-100 h-screen">
 
                 <div v-for="tunnel in this.$store.state.tunnels" :key="tunnel.name" class="flex flex-row px-5 py-2 items-center border-b">
                     <div class="flex-initial">
