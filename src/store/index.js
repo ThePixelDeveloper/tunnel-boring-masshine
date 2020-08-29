@@ -11,8 +11,8 @@ export default new Vuex.Store({
             id: "f7d04e41-9279-4159-92cb-dca8ac37b955",
             name: "Nomad",
             status: "Disconnected",
-            username: "",
-            hostname: "",
+            username: "mathew",
+            hostname: "localhost",
             port: 22,
             rules: [
                 {
@@ -30,16 +30,40 @@ export default new Vuex.Store({
             id: "23c23537-5ca1-4ad5-8a25-19f06cf98316",
             name: "Consul",
             status: "Disconnected",
-            username: "",
-            hostname: "",
-            port: 22
+            username: "daniel",
+            hostname: "192.168.1.1",
+            port: 22,
+            rules: [
+                {
+                    local: {
+                        address: "",
+                        port: 0
+                    },
+                    target: {
+                        address: "",
+                        port: 0
+                    }
+                }
+            ]
         }, {
             id: "f3e43ae4-f4dd-442b-93ba-95740c9b02aa",
             name: "Traefik",
             status: "Disconnected",
-            username: "",
-            hostname: "",
-            port: 22
+            username: "carlos",
+            hostname: "0.0.0.0",
+            port: 22,
+            rules: [
+                {
+                    local: {
+                        address: "",
+                        port: 0
+                    },
+                    target: {
+                        address: "",
+                        port: 0
+                    }
+                }
+            ]
         }],
     },
     mutations: {
@@ -67,8 +91,18 @@ export default new Vuex.Store({
         },
     },
     actions: {
-        connect({commit}, payload) {
-            commit('connecting', payload)
+        connect({getters, commit}, payload) {
+            if (getters.isConnecting(payload) || getters.isConnected(payload)) {
+                return;
+            }
+
+            setTimeout(() => {
+                commit('connecting', payload)
+
+                setTimeout(() => {
+                    commit('connected', payload)
+                }, 2000)
+            }, 2000)
 
             // const ssh = new Client()
             //
@@ -101,11 +135,15 @@ export default new Vuex.Store({
             //     privateKey: require('fs').readFileSync('~/.ssh/id_rsa')
             // })
         },
-        disconnect(context, payload) {
-            context.commit('disconnecting', payload)
+        disconnect({commit, getters}, payload) {
+            if (getters.isDisconnecting(payload) || getters.isDisconnected(payload)) {
+                return;
+            }
+
+            commit('disconnecting', payload)
 
             setTimeout(() => {
-                context.commit('disconnected', payload)
+                commit('disconnected', payload)
             }, 2000)
         },
     },
@@ -113,12 +151,21 @@ export default new Vuex.Store({
         getTunnelById: (state) => (id) => {
             return state.tunnels.find(tunnel => tunnel.id === id)
         },
+        isConnecting: (state, getters) => (payload) => {
+            return getters.getTunnelById(payload.id).status === "Connecting";
+        },
+        isConnected: (state, getters) => (payload) => {
+            return getters.getTunnelById(payload.id).status === "Connected";
+        },
+        isDisconnecting: (state, getters) => (payload) => {
+            return getters.getTunnelById(payload.id).status === "Disconnecting";
+        },
+        isDisconnected: (state, getters) => (payload) => {
+            return getters.getTunnelById(payload.id).status === "Disconnected";
+        },
         defaultTunnel(state) {
             return state.tunnels[0]
         },
-        tunnels(state) {
-            return state.tunnels
-        }
     },
     computed: mapState([
         "tunnels"
