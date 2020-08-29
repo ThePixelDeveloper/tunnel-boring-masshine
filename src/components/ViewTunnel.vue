@@ -27,7 +27,7 @@
                 this.$store.commit('removeTunnel', this.tunnel)
 
                 if (this.$store.getters.tunnels.length === 0) {
-                    this.$router.push('/new-tunnel');
+                    this.$router.push('/');
                     return
                 }
 
