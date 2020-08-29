@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex, {mapState} from 'vuex'
-import Client from 'ssh2'
-import * as net from "net";
+// import Client from 'ssh2'
+// import * as net from "net";
 
 Vue.use(Vuex)
 
@@ -70,36 +70,36 @@ export default new Vuex.Store({
         connect({commit}, payload) {
             commit('connecting', payload)
 
-            const ssh = new Client()
-
-            ssh.on('tcp connection', function (info, accept) {
-                let stream = accept(), socket
-                // @todo Deal with multiple rules.
-                stream.pause();
-                socket = net.connect(payload.rules.local.port, payload.rules.local.address, function () {
-                    stream.pipe(socket);
-                    socket.pipe(stream);
-                    stream.resume();
-                });
-            });
-
-            ssh.on('ready', () => {
-                // @todo Deal with multiple rules.
-                ssh.forwardIn(payload.rules.target.address, payload.rules.target.port, (err) => {
-                    if (err) {
-                        throw err
-                    }
-
-                    commit('connected', payload)
-                })
-            })
-
-            ssh.connect({
-                host: payload.hostname,
-                port: payload.port,
-                username: payload.username,
-                privateKey: require('fs').readFileSync('~/.ssh/id_rsa')
-            })
+            // const ssh = new Client()
+            //
+            // ssh.on('tcp connection', function (info, accept) {
+            //     let stream = accept(), socket
+            //     // @todo Deal with multiple rules.
+            //     stream.pause();
+            //     socket = net.connect(payload.rules.local.port, payload.rules.local.address, function () {
+            //         stream.pipe(socket);
+            //         socket.pipe(stream);
+            //         stream.resume();
+            //     });
+            // });
+            //
+            // ssh.on('ready', () => {
+            //     // @todo Deal with multiple rules.
+            //     ssh.forwardIn(payload.rules.target.address, payload.rules.target.port, (err) => {
+            //         if (err) {
+            //             throw err
+            //         }
+            //
+            //         commit('connected', payload)
+            //     })
+            // })
+            //
+            // ssh.connect({
+            //     host: payload.hostname,
+            //     port: payload.port,
+            //     username: payload.username,
+            //     privateKey: require('fs').readFileSync('~/.ssh/id_rsa')
+            // })
         },
         disconnect(context, payload) {
             context.commit('disconnecting', payload)
@@ -113,6 +113,12 @@ export default new Vuex.Store({
         getTunnelById: (state) => (id) => {
             return state.tunnels.find(tunnel => tunnel.id === id)
         },
+        defaultTunnel(state) {
+            return state.tunnels[0]
+        },
+        tunnels(state) {
+            return state.tunnels
+        }
     },
     computed: mapState([
         "tunnels"
