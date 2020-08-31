@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Vuex, {mapState} from 'vuex'
+import Vuex from 'vuex'
 import {Client} from "ssh2";
 
 const fs = require('fs')
@@ -9,69 +9,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        tunnels: [{
-            id: "f7d04e41-9279-4159-92cb-dca8ac37b955",
-            name: "Nomad",
-            status: "Disconnected",
-            username: "mathew",
-            hostname: "94.130.184.244",
-            privateKey: "/home/mathew/id_rsa",
-            port: 22,
-            rules: [
-                {
-                    local: {
-                        address: "localhost",
-                        port: 4646
-                    },
-                    target: {
-                        address: "10.0.1.2",
-                        port: 4646
-                    }
-                }
-            ]
-        }, {
-            id: "23c23537-5ca1-4ad5-8a25-19f06cf98316",
-            name: "Consul",
-            status: "Disconnected",
-            username: "mathew",
-            hostname: "94.130.173.250",
-            privateKey: "/home/mathew/id_rsa",
-            port: 22,
-            rules: [
-                {
-                    local: {
-                        address: "localhost",
-                        port: 8500
-                    },
-                    target: {
-                        address: "localhost",
-                        port: 8500
-                    }
-                }
-            ]
-        }, {
-            id: "f3e43ae4-f4dd-442b-93ba-95740c9b02aa",
-            name: "Traefik",
-            status: "Disconnected",
-            username: "mathew",
-            hostname: "88.99.184.196",
-            privateKey: "/home/mathew/id_rsa",
-            port: 22,
-            rules: [
-                {
-                    local: {
-                        address: "localhost",
-                        port: 8081
-                    },
-                    target: {
-                        address: "localhost",
-                        port: 8080
-                    }
-                }
-            ]
-        }],
+        tunnels: [],
     },
     mutations: {
+        setTunnels(state, tunnels) {
+            state.tunnels = tunnels
+        },
         addTunnel(state, payload) {
             state.tunnels.push(payload)
         },
@@ -190,8 +133,5 @@ export default new Vuex.Store({
         defaultTunnel(state) {
             return state.tunnels[0]
         },
-    },
-    computed: mapState([
-        "tunnels"
-    ])
+    }
 })
