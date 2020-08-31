@@ -35,9 +35,6 @@
 
 <script>
     export default {
-        name: 'Sidebar',
-        created() {
-            console.log(this.tunnels)
-        }
+        name: 'Sidebar'
     }
 </script>

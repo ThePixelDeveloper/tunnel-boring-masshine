@@ -1,17 +1,33 @@
 <template>
-  <div class="new-tunnel">
-    <NewTunnel></NewTunnel>
+  <div class="flex flex-col overflow-y-auto h-screen">
+    <TunnelForm v-on:handleSubmit="handleSubmit">
+      <div class="bg-gray-200 px-5 text-white py-2 flex flex-col">
+        <div class="flex flex-row-reverse items-center flex-grow">
+          <button class="font-medium text-xs shadow rounded py-1 px-5 bg-gray-100 text-blue-500">Create
+          </button>
+          <router-link tag="button"
+                       class="mx-1 font-medium text-xs shadow rounded py-1 px-5 bg-gray-100 text-gray-500"
+                       to="/">Cancel
+          </router-link>
+        </div>
+      </div>
+    </TunnelForm>
   </div>
 </template>
 
 <script>
   // @ is an alias to /src
-  import NewTunnel from "../components/NewTunnel";
+  import TunnelForm from "../components/TunnelForm";
 
   export default {
     name: 'NewTunnelView',
     components: {
-      NewTunnel
+      TunnelForm,
+    },
+    methods: {
+      handleSubmit() {
+        alert('hello world')
+      }
     }
   }
 </script>
