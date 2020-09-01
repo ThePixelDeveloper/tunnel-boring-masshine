@@ -12,16 +12,13 @@
         name: 'App',
         components: {Sidebar},
         created() {
-            const {app} = require('electron').remote
-            const fs = require('fs')
-            const path = require('path')
-
-            const tunnelsPath = path.join(app.getPath('userData'), 'tunnels.json')
-
-            if (fs.existsSync(tunnelsPath)) {
-                const tunnels = fs.readFileSync(tunnelsPath, 'utf-8')
-                this.$store.commit('setTunnels', JSON.parse(tunnels))
-            }
+            // const {app} = require('electron').remote
+            // const fs = require('fs')
+            // const tunnelsPath = require('path').join(app.getPath('userData'), 'tunnels.json')
+            //
+            // if (fs.existsSync(tunnelsPath)) {
+            //     this.$store.commit('setTunnels', JSON.parse(fs.readFileSync(tunnelsPath, 'utf-8')))
+            // }
         }
     }
 </script>

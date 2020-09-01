@@ -17,6 +17,7 @@
   "dependencies": {
     "chai-as-promised": "^7.1.1",
     "core-js": "^3.6.5",
+    "lodash": "^4.17.20",
     "register-service-worker": "^1.7.1",
     "ssh2": "^0.8.9",
     "vue": "^2.6.11",

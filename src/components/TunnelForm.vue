@@ -160,7 +160,10 @@
                     return;
                 }
 
-                this.$emit('handleSubmit', this.tunnel)
+                this.$emit('handleSubmit', {
+                    id: this.$route.params.id,
+                    tunnel: this.tunnel,
+                })
             }
         }
     }

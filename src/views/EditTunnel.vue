@@ -14,7 +14,7 @@
                         </button>
                         <router-link tag="button"
                                      class="mx-1 font-medium text-xs shadow rounded py-1 px-5 bg-gray-100 text-gray-500"
-                                     :to="{ name: 'View Tunnel', params: { id: tunnel.id }}">Cancel
+                                     :to="{ name: 'View Tunnel', params: { id: this.$route.params.id }}">Cancel
                         </router-link>
                     </div>
                 </div>
@@ -34,33 +34,13 @@
         },
         computed: {
             tunnel() {
-                return this.$store.getters.getTunnelById(this.$route.params.id)
+                return this.$store.state.tunnels[this.$route.params.id]
             }
         },
         methods: {
-            handleSubmit() {
-                alert('hello world')
-                // this.$store.commit('addTunnel', {
-                //     id: uuidv4(),
-                //     name: this.name,
-                //     username: this.username,
-                //     hostname: this.hostname,
-                //     port: this.port,
-                //     privateKey: this.privateKey,
-                //     status: "Disconnected",
-                //     rules: [
-                //         {
-                //             local: {
-                //                 address: "",
-                //                 port: 0
-                //             },
-                //             target: {
-                //                 address: "",
-                //                 port: 0
-                //             }
-                //         }
-                //     ]
-                // })
+            handleSubmit(payload) {
+                this.$store.commit('updateTunnel', payload)
+                this.$router.push('/tunnel/' + payload.id)
             }
         }
     }
