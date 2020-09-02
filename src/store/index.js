@@ -79,15 +79,16 @@ export default new Vuex.Store({
             state.tunnels = tunnels
         },
         setConnection(state, {id, connection}) {
-            state.tunnels[id].connection = connection
+            Vue.set(state.tunnels[id], "connection", connection)
         },
         setServer(state, {id, server}) {
-            state.tunnels[id].server = server
+            Vue.set(state.tunnels[id], "server", server)
         },
 
         // Creates
-        createTunnel(state, tunnel) {
-            state.tunnels[tunnel.id] = tunnel
+        createTunnel(state, {id, tunnel}) {
+            tunnel.status = "Disconnected"
+            Vue.set(state.tunnels, id, tunnel)
         },
 
         // Removes

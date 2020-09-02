@@ -7,6 +7,7 @@
                     v-bind:port="tunnel.port"
                     v-bind:hostname="tunnel.hostname"
                     v-bind:private-key="tunnel.privateKey"
+                    v-bind:rules="tunnel.rules"
                     v-on:handleSubmit="handleSubmit">
                 <div class="bg-gray-200 px-5 text-white py-2 flex flex-col">
                     <div class="flex flex-row-reverse items-center flex-grow">
@@ -39,7 +40,11 @@
         },
         methods: {
             handleSubmit(payload) {
-                this.$store.commit('updateTunnel', payload)
+                this.$store.commit('updateTunnel', {
+                    id: this.$route.params.id,
+                    tunnel: payload,
+                })
+
                 this.$router.push('/tunnel/' + payload.id)
             }
         }
