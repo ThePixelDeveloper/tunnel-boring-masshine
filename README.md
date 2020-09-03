@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/thepixeldeveloper/tunnel-boring-masshine">
-    <img src="ssh-tunnel-manager.png" alt="Logo" width="800">
+    <img src="tunnel-boring-masshine.png" alt="Logo" width="1280">
   </a>
 
   <h3 align="center">Tunnel Boring MaSSHine</h3>
