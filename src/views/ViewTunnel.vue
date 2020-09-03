@@ -14,8 +14,6 @@
                         </span>
                         <span>{{tunnel.status}}</span>
                     </div>
-
-
                 </div>
             </div>
             <div class="p-3 pl-5 pr-5 border-b border-dashed">

@@ -45,7 +45,7 @@
                     tunnel: payload,
                 })
 
-                this.$router.push('/tunnel/' + payload.id)
+                this.$router.push('/tunnel/' + this.$route.params.id)
             }
         }
     }
