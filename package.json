@@ -46,6 +46,8 @@
     "spectron": "^11.0.0",
     "tailwindcss": "^1.4.6",
     "vue-cli-plugin-electron-builder": "~2.0.0-rc.4",
-    "vue-template-compiler": "^2.6.11"
-  }
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.44.1"
+  },
+  "peerDependencies": {}
 }
