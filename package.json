@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "echo \"Doesn't apply to this project, use electron:serve instead.\"",
+    "build": "echo \"Doesn't apply to this project, use electron:build instead.\"",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
@@ -46,6 +46,7 @@
     "spectron": "^11.0.0",
     "tailwindcss": "^1.4.6",
     "vue-cli-plugin-electron-builder": "~2.0.0-rc.4",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.44.1"
   }
 }
