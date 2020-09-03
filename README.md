@@ -9,7 +9,7 @@
     Reliable SSH tunnels from one machine to another.
     <br />
     <br />
-    <a href="https://github.com/thepixeldeveloper/tunnel-boring-masshine"><strong>Download</strong></a>
+    <a href="https://github.com/ThePixelDeveloper/tunnel-boring-masshine/releases"><strong>Download</strong></a>
     ·
     <a href="https://github.com/thepixeldeveloper/tunnel-boring-masshine/issues">Report Bug</a>
     ·
@@ -44,6 +44,7 @@ happily take on feature requests .
 * [Vue CLI Plugin Electron Builder](https://github.com/nklayman/vue-cli-plugin-electron-builder)
 * [Vuelidate](https://vuelidate.js.org/)
 * [SSH2](https://github.com/mscdex/ssh2)
+* [Tailwind CSS](https://tailwindcss.com/)
 
 ## Getting Started
 
