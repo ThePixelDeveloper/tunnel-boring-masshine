@@ -10,74 +10,10 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        tunnels: {
-            "f7d04e41-9279-4159-92cb-dca8ac37b955": {
-                "name": "Nomad",
-                "status": "Disconnected",
-                "username": "mathew",
-                "hostname": "94.130.184.244",
-                "privateKey": "/home/mathew/id_rsa",
-                "port": 22,
-                "rules": [
-                    {
-                        "local": {
-                            "address": "localhost",
-                            "port": 4646
-                        },
-                        "target": {
-                            "address": "10.0.1.2",
-                            "port": 4646
-                        }
-                    }
-                ]
-            },
-            "23c23537-5ca1-4ad5-8a25-19f06cf98316": {
-                "name": "Consul",
-                "status": "Disconnected",
-                "username": "mathew",
-                "hostname": "94.130.173.250",
-                "privateKey": "/home/mathew/id_rsa",
-                "port": 22,
-                "rules": [
-                    {
-                        "local": {
-                            "address": "localhost",
-                            "port": 8500
-                        },
-                        "target": {
-                            "address": "localhost",
-                            "port": 8500
-                        }
-                    }
-                ]
-            },
-            "f3e43ae4-f4dd-442b-93ba-95740c9b02aa": {
-                "name": "Traefik",
-                "status": "Disconnected",
-                "username": "mathew",
-                "hostname": "88.99.184.196",
-                "privateKey": "/home/mathew/id_rsa",
-                "port": 22,
-                "rules": [
-                    {
-                        "local": {
-                            "address": "localhost",
-                            "port": 8081
-                        },
-                        "target": {
-                            "address": "localhost",
-                            "port": 8080
-                        }
-                    }
-                ]
-            }
-        },
+        tunnels: {},
     },
     mutations: {
         // Replaces
-        setTunnels(state, tunnels) {
-            state.tunnels = tunnels
-        },
         setConnection(state, {id, connection}) {
             Vue.set(state.tunnels[id], "connection", connection)
         },
@@ -128,6 +64,18 @@ export default new Vuex.Store({
         first(state) {
             return Object.keys(state.tunnels)[0]
         },
+        config(state) {
+            return _.mapValues(state.tunnels, (t) => {
+                return _.pick(t, [
+                    "name",
+                    "username",
+                    "hostname",
+                    "privateKey",
+                    "port",
+                    "rules",
+                ])
+            })
+        }
     },
     actions: {
         connect({state, commit}, id) {
@@ -168,6 +116,11 @@ export default new Vuex.Store({
 
             ssh.on('end', () => {
                 commit('disconnected', id);
+            })
+
+            ssh.on('error', (error) => {
+                alert(error)
+                commit('disconnected', id)
             })
 
             ssh.connect({

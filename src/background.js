@@ -1,9 +1,12 @@
 'use strict'
 
-import { app, protocol, BrowserWindow } from 'electron'
+import {app, protocol, BrowserWindow, ipcMain} from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
+
+const fs = require('fs')
+const path = require('path')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -62,19 +65,14 @@ app.on('activate', () => {
   }
 })
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.on('ready', async () => {
+app.whenReady().then(async () => {
   if (isDevelopment && !process.env.IS_TEST) {
-    // Install Vue Devtools
-    try {
-      await installExtension(VUEJS_DEVTOOLS)
-    } catch (e) {
-      console.error('Vue Devtools failed to install:', e.toString())
-    }
+    await installExtension(VUEJS_DEVTOOLS)
+        .then((name) => console.log(`Added Extension:  ${name}`))
+        .catch((err) => console.log('An error occurred: ', err));
   }
-  createWindow()
+
+  createWindow();
 })
 
 // Exit cleanly on request from parent process in development mode.
@@ -91,3 +89,18 @@ if (isDevelopment) {
     })
   }
 }
+
+ipcMain.handle('read-tunnels',  async () => {
+  const tunnelsPath = path.join(app.getPath('userData'), 'tunnels.json')
+
+  if (await fs.promises.stat(tunnelsPath)) {
+    return fs.promises.readFile(tunnelsPath, 'utf-8')
+  }
+
+  return {}
+})
+
+ipcMain.handle('write-tunnels', async (event, config) => {
+  const tunnelsPath = path.join(app.getPath('userData'), 'tunnels.json')
+  return fs.promises.writeFile(tunnelsPath, JSON.stringify(config))
+})
