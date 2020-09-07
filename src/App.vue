@@ -7,26 +7,20 @@
 
 <script>
     import Sidebar from "./components/Sidebar";
-    import {ipcRenderer} from "electron";
+    import ipc from "./renderer/utils/ipc"
 
     export default {
         name: 'App',
         components: {Sidebar},
-        async created() {
+        async beforeCreate() {
+            // Load the configuration into the store on boot
+            this.$store.dispatch('loadConfig', await ipc.readConfig())
+
+            // Write configuration changes to disk as they happen.
             this.unwatch = this.$store.watch(
                 (state, getters) => getters.config,
-                async (config) => {
-                    await ipcRenderer.invoke('write-tunnels', config)
-                })
-
-            const tunnels = JSON.parse(await ipcRenderer.invoke('read-tunnels'))
-
-            Object.keys(tunnels).forEach((id) => {
-                this.$store.commit('createTunnel', {
-                    id: id,
-                    tunnel: tunnels[id],
-                })
-            })
+                (config) => ipc.writeConfig(config)
+            )
         },
         destroyed() {
             this.unwatch();

@@ -1,12 +1,11 @@
 'use strict'
 
-import {app, protocol, BrowserWindow, ipcMain} from 'electron'
-import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
-import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
-const isDevelopment = process.env.NODE_ENV !== 'production'
+import {app, BrowserWindow, protocol} from 'electron'
+import {createProtocol} from 'vue-cli-plugin-electron-builder/lib'
+import installExtension, {VUEJS_DEVTOOLS} from 'electron-devtools-installer'
+import prepareIpc from './main/utils/ipc'
 
-const fs = require('fs')
-const path = require('path')
+const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -27,7 +26,8 @@ function createWindow() {
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-      nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION
+      nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
+      preload: require('path').join(__dirname, 'preload.js')
     }
   })
 
@@ -73,6 +73,7 @@ app.whenReady().then(async () => {
   }
 
   createWindow();
+  prepareIpc(win);
 })
 
 // Exit cleanly on request from parent process in development mode.
@@ -89,18 +90,3 @@ if (isDevelopment) {
     })
   }
 }
-
-ipcMain.handle('read-tunnels',  async () => {
-  const tunnelsPath = path.join(app.getPath('userData'), 'tunnels.json')
-
-  if (await fs.promises.stat(tunnelsPath)) {
-    return fs.promises.readFile(tunnelsPath, 'utf-8')
-  }
-
-  return {}
-})
-
-ipcMain.handle('write-tunnels', async (event, config) => {
-  const tunnelsPath = path.join(app.getPath('userData'), 'tunnels.json')
-  return fs.promises.writeFile(tunnelsPath, JSON.stringify(config))
-})
