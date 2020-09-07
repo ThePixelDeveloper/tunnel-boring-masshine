@@ -42,7 +42,7 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "sass": "^1.26.5",
-    "sass-loader": "^8.0.2",
+    "sass-loader": "^10.0.2",
     "spectron": "^11.0.0",
     "tailwindcss": "^1.7.6",
     "vue-cli-plugin-electron-builder": "~2.0.0-rc.4",
