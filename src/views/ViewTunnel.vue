@@ -76,10 +76,10 @@
             <div class="flex-grow"></div>
             <div class="bg-gray-200 px-5 text-white h-10 flex row">
                 <div class="flex items-center flex-grow">
-                    <button @click="connect"
+                    <button @click="connect" v-if='tunnel.status !== "Connected"'
                             class="font-medium text-xs shadow rounded py-1 px-5 bg-gray-100 text-blue-500">Connect
                     </button>
-                    <button @click="disconnect"
+                    <button @click="disconnect" v-if='tunnel.status === "Connected"'
                             class="mx-1 font-medium text-xs shadow rounded py-1 px-5 bg-gray-100 text-blue-500">
                         Disconnect
                     </button>
