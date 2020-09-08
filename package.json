@@ -1,6 +1,6 @@
 {
   "name": "tunnel-boring-masshine",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "serve": "echo \"Doesn't apply to this project, use electron:serve instead.\"",
@@ -11,7 +11,8 @@
     "electron:build": "vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
-    "postuninstall": "electron-builder install-app-deps"
+    "postuninstall": "electron-builder install-app-deps",
+    "release": "standard-version"
   },
   "main": "background.js",
   "dependencies": {
@@ -45,6 +46,7 @@
     "sass": "^1.26.5",
     "sass-loader": "^10.0.2",
     "spectron": "^11.0.0",
+    "standard-version": "^9.0.0",
     "tailwindcss": "^1.8.5",
     "vue-cli-plugin-electron-builder": "~2.0.0-rc.4",
     "vue-template-compiler": "^2.6.12",
