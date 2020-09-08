@@ -9,11 +9,11 @@
     Reliable SSH tunnels from one machine to another.
     <br />
     <br />
-    <a href="https://github.com/ThePixelDeveloper/tunnel-boring-masshine/releases"><strong>Download</strong></a>
+    <a href="https://github.com/thepixeldeveloper/tunnel-boring-masshine/releases"><strong>Download</strong></a>
     ·
     <a href="https://github.com/thepixeldeveloper/tunnel-boring-masshine/issues">Report Bug</a>
     ·
-    <a href="https://github.com/thepixeld/tunnel-boring-masshine/issues">Request Feature</a>
+    <a href="https://github.com/thepixeldeveloper/tunnel-boring-masshine/issues">Request Feature</a>
   </p>
 </p>
 
