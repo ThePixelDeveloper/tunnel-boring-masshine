@@ -36,12 +36,7 @@ export class Client {
     }
 
     connect() {
-        if (this.isConnected) {
-            return
-        }
-
         this.client.on('ready', () => {
-
             // Create servers for all the local forwards.
             this.rules.forEach((rule) => {
                 const server = require('net').createServer(sock => {
@@ -52,6 +47,7 @@ export class Client {
                         rule.targetPort,
                         (err, stream) => {
                             if (err) {
+                                console.error(err)
                                 return sock.end();
                             }
                             sock.pipe(stream).pipe(sock);
@@ -87,9 +83,7 @@ export class Client {
             privateKey: require('fs').readFileSync(this.privateKey),
             port: this.port,
         })
-
-        this.isConnected = true
-
+        
         return () => {
             this.client.end()
             this.servers.forEach(server => server.close())
