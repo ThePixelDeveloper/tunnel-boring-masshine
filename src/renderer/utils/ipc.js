@@ -13,7 +13,7 @@ const connect = (id, hostname, username, privateKey, port, rules) => {
 };
 
 const connected = (handler) => {
-    window.ipc.on('connected', (event, ...args) => handler(args))
+    window.ipc.on('connected', (event, ...args) => handler(...args))
 }
 
 const disconnect = (id) => {
@@ -21,7 +21,11 @@ const disconnect = (id) => {
 }
 
 const disconnected = (handler) => {
-    window.ipc.on('disconnected', (event, ...args) => handler(args))
+    window.ipc.on('disconnected', (event, ...args) => handler(...args))
+}
+
+const error = (handler) => {
+    window.ipc.on('error', (event, ...args) => handler(...args))
 }
 
 const readConfig = () => {
@@ -42,6 +46,7 @@ export default {
     connected,
     disconnect,
     disconnected,
+    error,
     readConfig,
     writeConfig,
 }

@@ -82,6 +82,7 @@ export default new Vuex.Store({
             commit('connecting', id)
 
             ipc.connected((id) => commit('connected', id))
+            ipc.error((id) => commit('disconnected', id))
             ipc.connect(
                 id,
                 tunnel.hostname,
