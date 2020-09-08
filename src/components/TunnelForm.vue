@@ -4,7 +4,7 @@
             <h2 class="text-sm font-medium mb-3">Name</h2>
             <div class="flex-row">
                 <input class="border px-2 py-1 rounded w-48 text-sm" type="text" placeholder="Tunnel name"
-                       v-model="tunnel.name">
+                       v-model.trim="tunnel.name">
             </div>
             <div class="flex-row mt-2" v-if="!$v.tunnel.name.required && $v.tunnel.name.$error">
                 <span class="text-red-600 text-sm">The tunnel name is required.</span>
@@ -14,13 +14,13 @@
             <h2 class="text-sm font-medium mb-3">SSH Connection Details</h2>
             <div class="flex flex-row items-center">
                 <input class="border px-2 py-1 rounded w-48 flex-none text-sm" type="text"
-                       placeholder="Username" v-model="tunnel.username">
+                       placeholder="Username" v-model.trim="tunnel.username">
                 <span class="mx-1">@</span>
                 <input class="border px-2 py-1 rounded w-48 flex-auto text-sm" type="text"
-                       placeholder="IP Address or hostname" v-model="tunnel.hostname">
+                       placeholder="IP Address or hostname" v-model.trim="tunnel.hostname">
                 <span class="mx-1">:</span>
                 <input class="border px-2 py-1 rounded w-20 text-sm" type="number" placeholder="Port"
-                       v-model="tunnel.port">
+                       v-model.number="tunnel.port">
             </div>
             <div class="flex-row mt-2"
                  v-if="$v.tunnel.username.$error||$v.tunnel.hostname.$error||$v.tunnel.port.$error">
@@ -39,7 +39,7 @@
                 </button>
                 <input disabled="disabled" class="bg-gray-100 border px-2 py-1 rounded ml-5 flex-auto text-sm"
                        type="text"
-                       v-model="tunnel.privateKey">
+                       v-model.trim="tunnel.privateKey">
             </div>
             <div class="flex-row mt-2" v-if="!$v.tunnel.privateKey.required && $v.tunnel.privateKey.$error">
                 <span class="text-red-600 text-sm">An SSH key is required.</span>
@@ -71,10 +71,10 @@
                 <div class="flex flex-row items-center">
                     <div class="flex flex-auto shadow-inner bg-green-200 rounded py-1 px-2">
                         <input class="flex-auto text-sm text-right text-green-700 placeholder-green-700 bg-transparent"
-                               placeholder="Bind address" type="text" v-model="rule.local.address">
+                               placeholder="Bind address" type="text" v-model.trim="rule.local.address">
                         <span class="text-sm mx-1 text-green-700">:</span>
                         <input class="w-20 text-sm text-green-700 placeholder-green-700 bg-transparent"
-                               placeholder="Port" type="number" v-model="rule.local.port">
+                               placeholder="Port" type="number" v-model.number="rule.local.port">
                     </div>
                     <div class="mx-3 text-black">
                         <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16"
@@ -85,11 +85,11 @@
                     </div>
                     <div class="flex flex-auto shadow-inner bg-blue-200 rounded py-1 px-2">
                         <input class="flex-auto text-sm text-right text-blue-700 placeholder-blue-700 bg-transparent"
-                               placeholder="Target address" type="text" v-model="rule.target.address">
+                               placeholder="Target address" type="text" v-model.trim="rule.target.address">
                         <span class="text-sm mx-1 text-blue-700">:</span>
                         <input class="w-20 text-sm text-blue-700 placeholder-blue-700 bg-transparent"
                                placeholder="Port"
-                               type="number" v-model="rule.target.port">
+                               type="number" v-model.number="rule.target.port">
                     </div>
                 </div>
                 <div class="flex-row mt-2">
