@@ -1,5 +1,3 @@
-import { timeout } from 'promise-timeout';
-
 const privateKeyDialog = () => {
     return new Promise((resolve, reject) => {
         window.ipc.on('privateKeyDialog.response', (event, arg) =>
@@ -27,19 +25,16 @@ const disconnected = (handler) => {
 }
 
 const readConfig = () => {
-    return timeout(
-        new Promise((resolve, reject) => {
-            window.ipc.once('config.read.response', (event, arg) =>
-                arg instanceof Error ? reject(arg) : resolve(arg)
-            );
+    return new Promise((resolve, reject) => {
+        window.ipc.once('config.read.response', (event, arg) =>
+            arg instanceof Error ? reject(arg) : resolve(arg)
+        );
 
-            window.ipc.send('config.read');
-        }),
-        1000
-    );
+        window.ipc.send('config.read');
+    });
 }
 
-const writeConfig = (config) => window.ipc.send('config.write', config);
+const writeConfig = (config) => window.ipc.send('config.write', config)
 
 export default {
     privateKeyDialog,

@@ -41,10 +41,13 @@ export default () => {
 
     ipcMain.on('config.read', async (event) => {
         const path = require('path').join(app.getPath('userData'), 'tunnels.json')
-        const config = await require('fs').promises.readFile(path, 'utf-8')
 
-        if (await require('fs').promises.stat(path)) {
-            event.sender.send('config.read.response', JSON.parse(config))
+        try {
+            await require('fs').promises.access(path)
+
+            event.sender.send('config.read.response', JSON.parse(await require('fs').promises.readFile(path, 'utf-8')))
+        } catch (e) {
+            event.sender.send('config.read.response', e)
         }
     })
 

@@ -12,9 +12,13 @@
     export default {
         name: 'App',
         components: {Sidebar},
-        async beforeCreate() {
-            // Load the configuration into the store on boot
-            this.$store.dispatch('loadConfig', await ipc.readConfig())
+        async created() {
+            try {
+                // Load the configuration into the store on boot
+                this.$store.dispatch('loadConfig', await ipc.readConfig())
+            } catch (e) {
+                console.error(e)
+            }
 
             // Write configuration changes to disk as they happen.
             this.unwatch = this.$store.watch(
