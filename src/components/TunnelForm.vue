@@ -123,6 +123,7 @@
 
 <script>
     import {required} from "vuelidate/lib/validators";
+    import ipc from '../renderer/utils/ipc'
 
     export default {
         name: 'TunnelForm',
@@ -214,18 +215,8 @@
             },
         },
         methods: {
-            privateKeyDialog() {
-                const {dialog} = require('electron').remote
-                const os = require('os')
-
-                const privateKey = dialog.showOpenDialogSync({
-                    defaultPath: os.homedir() + '/.ssh',
-                    properties: ['openFile', 'showHiddenFiles', 'dontAddToRecent']
-                })
-
-                if (privateKey !== undefined && privateKey.length === 1) {
-                    this.tunnel.privateKey = privateKey[0]
-                }
+            async privateKeyDialog() {
+                this.tunnel.privateKey = await ipc.privateKeyDialog();
             },
             handleSubmit() {
                 this.$v.tunnel.$touch()

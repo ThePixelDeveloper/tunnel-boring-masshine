@@ -1,6 +1,8 @@
-import {app, ipcMain} from "electron";
+import {app, ipcMain, dialog} from "electron";
 import {Client} from "./ssh";
 import {SshManager} from "./ssh-manager";
+
+const os = require("os");
 
 const sshManager = new SshManager();
 
@@ -24,6 +26,17 @@ export default () => {
 
     ipcMain.on('disconnect', (event, id) => {
         sshManager.callDisconnectCallback(id)
+    })
+
+    ipcMain.on('privateKeyDialog', async (event) => {
+        const privateKey = dialog.showOpenDialogSync({
+            defaultPath: os.homedir() + '/.ssh',
+            properties: ['openFile', 'showHiddenFiles', 'dontAddToRecent']
+        })
+
+        if (privateKey !== undefined && privateKey.length === 1) {
+            event.sender.send('privateKeyDialog.response', privateKey[0])
+        }
     })
 
     ipcMain.on('config.read', async (event) => {

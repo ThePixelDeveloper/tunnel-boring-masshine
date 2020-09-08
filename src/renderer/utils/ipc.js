@@ -1,5 +1,15 @@
 import { timeout } from 'promise-timeout';
 
+const privateKeyDialog = () => {
+    return new Promise((resolve, reject) => {
+        window.ipc.on('privateKeyDialog.response', (event, arg) =>
+            arg instanceof Error ? reject(arg) : resolve(arg)
+        );
+
+        window.ipc.send('privateKeyDialog');
+    });
+}
+
 const connect = (id, hostname, username, privateKey, port, rules) => {
     window.ipc.send('connect', id, hostname, username, privateKey, port, rules);
 };
@@ -32,6 +42,7 @@ const readConfig = () => {
 const writeConfig = (config) => window.ipc.send('config.write', config);
 
 export default {
+    privateKeyDialog,
     connect,
     connected,
     disconnect,
