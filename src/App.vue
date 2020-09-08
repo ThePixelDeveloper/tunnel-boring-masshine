@@ -17,7 +17,7 @@
                 // Load the configuration into the store on boot
                 this.$store.dispatch('loadConfig', await ipc.readConfig())
             } catch (e) {
-                console.error(e)
+                // @todo Electron logging?
             }
 
             // Write configuration changes to disk as they happen.

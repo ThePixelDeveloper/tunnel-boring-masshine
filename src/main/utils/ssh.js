@@ -11,7 +11,6 @@ export class Client {
         this.client = new SSH()
         this.servers = []
         this.rules = []
-        this.isConnected = false
     }
 
     handleConnected(handler) {
@@ -47,7 +46,6 @@ export class Client {
                         rule.targetPort,
                         (err, stream) => {
                             if (err) {
-                                console.error(err)
                                 return sock.end();
                             }
                             sock.pipe(stream).pipe(sock);
