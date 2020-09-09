@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/compare/v0.1.2...v0.1.3) (2020-09-09)
+
+
+### Bug Fixes
+
+* handle the window being reloaded with CMD+R ([958ccea](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/commit/958ccea3f423cd96b68e7a0629e544351e989652))
+* new Buffer() security warning ([9cab807](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/commit/9cab8071a76d96c44ac23a93ab9f15f071fe5e67))
+* tailwindcss warnings ([eb24f2c](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/commit/eb24f2ceef40bf72f36b3ccf39108f24be18481d))
+
 ### [0.1.2](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/compare/v0.1.1...v0.1.2) (2020-09-09)
 
 
