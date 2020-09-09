@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/compare/v0.1.1...v0.1.2) (2020-09-09)
+
+
+### Features
+
+* add commit message linting ([44528b5](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/commit/44528b50c66db02b0b4d752e4c7160bfcb8b1602))
+* hide the connect/disconnect based on thee connection state ([32fd799](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/commit/32fd799f1f340882221ec301dd58bb69e8ae97be))
+
+
+### Bug Fixes
+
+* broken links in the readme ([6fb0728](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/commit/6fb0728cc7ff4dcc8afab0a1252597beb9b723bc))
+* if the connection errors, set the state back to disconnected ([4867fcd](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/commit/4867fcd8ab71995b9476aeb44ca9e868d74979fe))
+* overlapping window controls on macOS ([b27e672](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/commit/b27e67213c9b873375634a29e1b2c3ddddcfa463))
+* remove console calls ([0c57134](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/commit/0c57134de09fd4d84a4258834f98654481831cfa))
+* rules not persisted on update ([cc1a3b3](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/commit/cc1a3b344730824ebc66dd3e4a7e2902f220e7b4))
+
 ### 0.1.1 (2020-09-08)
 
 
