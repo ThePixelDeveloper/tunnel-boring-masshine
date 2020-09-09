@@ -30,7 +30,7 @@ export default new Vuex.Store({
 
         // Updates
         updateTunnel(state, {id, tunnel}) {
-            _.merge(state.tunnels[id], tunnel)
+            Vue.set(state.tunnels, id, _.extend({}, state.tunnels[id], tunnel))
         },
 
         // Connection status
