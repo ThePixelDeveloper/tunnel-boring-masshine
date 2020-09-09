@@ -11204,10 +11204,9 @@ stream-to-observable@^0.1.0:
   resolved "https://registry.yarnpkg.com/stream-to-observable/-/stream-to-observable-0.1.0.tgz#45bf1d9f2d7dc09bed81f1c307c430e68b84cffe"
   integrity sha1-Rb8dny19wJvtgfHDB8Qw5ouEz/4=
 
-streamsearch@~0.1.2:
+"streamsearch@https://github.com/aprilcoskun/streamsearch.git", streamsearch@~0.1.2:
   version "0.1.2"
-  resolved "https://registry.yarnpkg.com/streamsearch/-/streamsearch-0.1.2.tgz#808b9d0e56fc273d809ba57338e929919a1a9f1a"
-  integrity sha1-gIudDlb8Jz2Am6VzOOkpkZoanxo=
+  resolved "https://github.com/aprilcoskun/streamsearch.git#972a38752f59506083759d9717591195a4eb3ab4"
 
 strict-uri-encode@^1.0.0:
   version "1.1.0"
