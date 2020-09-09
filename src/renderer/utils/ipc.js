@@ -8,6 +8,16 @@ const privateKeyDialog = () => {
     });
 }
 
+const isConnected = (id) => {
+    return new Promise((resolve, reject) => {
+        window.ipc.on('isConnected.response', (event, arg) =>
+          arg instanceof Error ? reject(arg) : resolve(arg)
+        );
+
+        window.ipc.send('isConnected', id);
+    });
+}
+
 const connect = (id, hostname, username, privateKey, port, rules) => {
     window.ipc.send('connect', id, hostname, username, privateKey, port, rules);
 };
@@ -42,6 +52,7 @@ const writeConfig = (config) => window.ipc.send('config.write', config)
 
 export default {
     privateKeyDialog,
+    isConnected,
     connect,
     connected,
     disconnect,

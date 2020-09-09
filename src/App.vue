@@ -21,13 +21,10 @@
             }
 
             // Write configuration changes to disk as they happen.
-            this.unwatch = this.$store.watch(
+            this.$store.watch(
                 (state, getters) => getters.config,
                 (config) => ipc.writeConfig(config)
             )
         },
-        destroyed() {
-            this.unwatch();
-        }
     }
 </script>

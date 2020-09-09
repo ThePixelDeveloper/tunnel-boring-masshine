@@ -13,7 +13,6 @@ export default new Vuex.Store({
     mutations: {
         // Creates
         createTunnel(state, {id, tunnel}) {
-            tunnel.status = "Disconnected"
             Vue.set(state.tunnels, id, tunnel)
         },
 
@@ -70,9 +69,12 @@ export default new Vuex.Store({
     actions: {
         loadConfig({commit}, config) {
             Object.keys(config).forEach((id) => {
-                commit('createTunnel', {
-                    id: id,
-                    tunnel: config[id],
+                ipc.isConnected(id).then((isConnected) => {
+                    config[id].status = isConnected ? 'Connected' : 'Disconnected'
+                    commit('createTunnel', {
+                        id: id,
+                        tunnel: config[id],
+                    })    
                 })
             })
         },

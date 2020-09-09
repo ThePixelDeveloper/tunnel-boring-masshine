@@ -28,6 +28,10 @@ export default () => {
         sshManager.callDisconnectCallback(id)
     })
 
+    ipcMain.on('isConnected', (event, id) => {
+        event.sender.send('isConnected.response', sshManager.isConnected(id))
+    })
+
     ipcMain.on('privateKeyDialog', async (event) => {
         const privateKey = dialog.showOpenDialogSync({
             defaultPath: os.homedir() + '/.ssh',
