@@ -39,7 +39,7 @@
     "@vue/cli-plugin-unit-mocha": "~4.5.4",
     "@vue/cli-plugin-vuex": "~4.5.4",
     "@vue/cli-service": "~4.5.4",
-    "@vue/test-utils": "^1.0.5",
+    "@vue/test-utils": "^1.1.0",
     "babel-eslint": "^10.1.0",
     "chai": "^4.1.2",
     "electron": "^10.1.1",
