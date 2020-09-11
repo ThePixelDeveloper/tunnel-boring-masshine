@@ -1,5 +1,5 @@
 <p align="center">
-  <h3 align="center">Tunnel Boring MaSSHine</h3>
+  <h1 align="center">Tunnel Boring MaSSHine</h1>
 
   <p align="center">
     Reliable SSH tunnels from one machine to another.
@@ -12,7 +12,7 @@
 ## Abstract
 
 <p align="center">
-  <img src="Tunnel%20Boring%20MaSSHine%402x.png" width="800" />
+  <img src="docs/Tunnel%20Boring%20MaSSHine%402x.png" width="800" />
 </div>
 
 Inspired by the lack of [Core Tunnel](https://apps.apple.com/us/app/core-tunnel/id1354318707?mt=12)
