@@ -12,7 +12,7 @@
 ## Abstract
 
 <p align="center">
-  <img src="docs/explanation.png" width="100%" />
+  <img src="docs/readme.png" width="100%" />
 </div>
 
 Inspired by the lack of [Core Tunnel](https://apps.apple.com/us/app/core-tunnel/id1354318707?mt=12)
