@@ -2,7 +2,7 @@
   <h2 align="center">Tunnel Boring MaSSHine</h2>
 
   <p align="center">
-    Reliable SSH tunnels from one machine to another.
+    Access internal server software with ease
     <br />
     <br />
     <strong>Download</strong> for <a href="https://github.com/ThePixelDeveloper/tunnel-boring-masshine/releases/download/v0.1.3/tunnel-boring-masshine-0.1.3.dmg">macOS</a>, <a href="https://github.com/ThePixelDeveloper/tunnel-boring-masshine/releases/download/v0.1.3/tunnel-boring-masshine-Setup-0.1.3.exe">Windows</a> and <a href="https://github.com/ThePixelDeveloper/tunnel-boring-masshine/releases/download/v0.1.3/tunnel-boring-masshine-0.1.3.AppImage">Linux (App Image)</a> 
@@ -12,7 +12,7 @@
 ## Abstract
 
 <p align="center">
-  <img src="docs/Tunnel%20Boring%20MaSSHine.png" width="800" />
+  <img src="docs/Tunnel%20Boring%20MaSSHine@2x.png" width="100%" />
 </div>
 
 Inspired by the lack of [Core Tunnel](https://apps.apple.com/us/app/core-tunnel/id1354318707?mt=12)
