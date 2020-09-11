@@ -11,15 +11,13 @@
 
 ## Abstract
 
+...
+
+## TL;DR
+
+<p align="center">Access remote server software, on your computer.</p>
+
 <p align="center">
   <img src="docs/readme.png" width="100%" />
 </div>
 
-Inspired by the lack of [Core Tunnel](https://apps.apple.com/us/app/core-tunnel/id1354318707?mt=12)
-on elementaryOS, the Tunnel Boring MaSSHine is an easy way to manage SSH
-tunnels on Linux, Mac _and_ Windows. This is a minimal start, so will
-happily take on feature requests.
-
-### Features
-
-1. Supports local SSH tunnels (`ssh -L`)
