@@ -1,5 +1,5 @@
 <p align="center">
-  <h1 align="center">Tunnel Boring MaSSHine</h1>
+  <h2 align="center">Tunnel Boring MaSSHine</h2>
 
   <p align="center">
     Reliable SSH tunnels from one machine to another.
