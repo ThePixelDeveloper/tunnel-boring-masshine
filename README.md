@@ -12,7 +12,7 @@
 ## Abstract
 
 <p align="center">
-  <img src="docs/Tunnel%20Boring%20MaSSHine%402x.png" width="800" />
+  <img src="docs/Tunnel%20Boring%20MaSSHine.png" width="800" />
 </div>
 
 Inspired by the lack of [Core Tunnel](https://apps.apple.com/us/app/core-tunnel/id1354318707?mt=12)
