@@ -15,9 +15,9 @@
 
 ## TL;DR
 
-<p align="center">Access remote server software, on your computer.</p>
 
 <p align="center">
   <img src="docs/readme.png" width="100%" />
 </div>
 
+<p align="center">Access remote server software, on your computer.</p>
