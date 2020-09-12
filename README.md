@@ -26,4 +26,4 @@ ssh -L 127.0.0.1:8000:intra.example.com:800 192.168.1.1 \
 
 to having this:  
 
-![](./docs/tray.png)
+<img src="./docs/tray.png" width="50%">
