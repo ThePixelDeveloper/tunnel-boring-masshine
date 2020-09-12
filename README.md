@@ -19,7 +19,7 @@ No more forgetting what command line argument you need to run.
 Go from running this:  
 
 ``` bash
-ssh -L 127.0.0.1:8000:intra.example.com:800 192.168.1.1 \
+ssh -L 127.0.0.1:4646:10.0.1.2:4646 192.168.1.1 \
     -o ServerAliveInterval=60 \ 
     -o ServerAliveCountMax=3 
 ```
