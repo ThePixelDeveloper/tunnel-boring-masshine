@@ -8,6 +8,10 @@ const privateKeyDialog = () => {
     });
 }
 
+const tray = (tunnels) => {
+    window.ipc.send('tray', tunnels);
+}
+
 const isConnected = (id) => {
     return new Promise((resolve, reject) => {
         window.ipc.on('isConnected.response', (event, arg) =>
@@ -18,8 +22,8 @@ const isConnected = (id) => {
     });
 }
 
-const connect = (id, hostname, username, privateKey, port, rules) => {
-    window.ipc.send('connect', id, hostname, username, privateKey, port, rules);
+const connect = (tunnel) => {
+    window.ipc.send('connect', tunnel);
 };
 
 const connected = (handler) => {
@@ -53,6 +57,7 @@ const writeConfig = (config) => window.ipc.send('config.write', config)
 export default {
     privateKeyDialog,
     isConnected,
+    tray,
     connect,
     connected,
     disconnect,

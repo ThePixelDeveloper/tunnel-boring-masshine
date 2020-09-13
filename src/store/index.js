@@ -47,6 +47,14 @@ export default new Vuex.Store({
         },
     },
     getters: {
+        tray(state) {
+            return _.mapValues(state.tunnels, (t) => {
+                return _.pick(t, [
+                    "name",
+                    "status",
+                ])
+            })
+        },
         count(state) {
             return Object.keys(state.tunnels).length
         },
@@ -85,14 +93,7 @@ export default new Vuex.Store({
 
             ipc.connected((id) => commit('connected', id))
             ipc.error((id) => commit('disconnected', id))
-            ipc.connect(
-                id,
-                tunnel.hostname,
-                tunnel.username,
-                tunnel.privateKey,
-                tunnel.port,
-                tunnel.rules,
-            )
+            ipc.connect(tunnel)
         },
         disconnect({commit}, id) {
             commit('disconnecting', id)

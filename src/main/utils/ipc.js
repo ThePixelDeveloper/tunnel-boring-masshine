@@ -1,27 +1,30 @@
-import {app, ipcMain, dialog} from "electron";
-import {Client} from "./ssh";
-import {SshManager} from "./ssh-manager";
+import {app, ipcMain, dialog, Menu} from "electron";
+import {Client} from "../services/ssh";
+import {SshCollection} from "../services/ssh-collection";
 
 const os = require("os");
 
-const sshManager = new SshManager();
+const sshManager = new SshCollection();
 
-export default () => {
+function connect(event, id, tunnel) {
+    const client = new Client(tunnel)
 
-    ipcMain.on('connect', (event, id, host, username, privateKey, port, rules) => {
-        const client = new Client(id, host, username, privateKey, port)
+    // Event handlers
+    client.handleConnected((id) => event.sender.send('connected', id))
+    client.handleDisconnected((id) => event.sender.send('disconnected', id))
+    client.handleError( (id, error) => event.sender.send('error', id, error))
 
-        rules.forEach((rule) => {
-            client.addRule(rule.local.address, rule.local.port, rule.target.address, rule.target.port)
-        })
+    // Start the tunneling and register the disconnect func.
+    sshManager.registerDisconnectCallback(client.connect());
+}
 
-        // Event handlers
-        client.handleConnected((id) => event.sender.send('connected', id))
-        client.handleDisconnected((id) => event.sender.send('disconnected', id))
-        client.handleError( (id, error) => event.sender.send('error', id, error))
+export default (tray) => {
 
-        // Start the tunneling and register the disconnect func.
-        sshManager.registerDisconnectCallback(id, client.connect());
+    ipcMain.on('connect', (event, tunnel) => {
+        for (const [id, tunnel] of Object.entries(tunnel)) {
+            connect(event, id, tunnel)    
+        }
+        
     })
 
     ipcMain.on('disconnect', (event, id) => {
@@ -30,6 +33,31 @@ export default () => {
 
     ipcMain.on('isConnected', (event, id) => {
         event.sender.send('isConnected.response', sshManager.isConnected(id))
+    })
+    
+    ipcMain.on('tray', (event, tunnels) => {
+        let trayItems = []
+        
+        for (const [id, tunnel] of Object.entries(tunnels)) {
+            trayItems.push({
+                label: tunnel.name,
+                icon: tunnel.status.toLowerCase()+".png",
+                click: () => connect(event, {[id]: tunnel}),
+            })
+        }
+        
+        tray.setToolTip('This is my application.')
+        tray.setContextMenu(Menu.buildFromTemplate(
+            [
+              ...[
+                  { label: 'Connect All', enabled: false, },
+                  { label: 'Disconnect All ', enabled: false, },
+                  { type: 'separator', },
+                ],
+                ...trayItems
+            ]
+          )
+        )
     })
 
     ipcMain.on('privateKeyDialog', async (event) => {

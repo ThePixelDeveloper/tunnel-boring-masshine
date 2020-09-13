@@ -1,16 +1,10 @@
 import {Client as SSH} from 'ssh2'
 
 export class Client {
-    constructor(id, hostname, username, privateKey, port) {
-        this.id = id;
-        this.hostname = hostname;
-        this.username = username;
-        this.privateKey = privateKey;
-        this.port = port;
-
+    constructor(tunnel) {
+        this.tunnel = tunnel
         this.client = new SSH()
         this.servers = []
-        this.rules = []
     }
 
     handleConnected(handler) {
@@ -25,19 +19,10 @@ export class Client {
         this.error = handler
     }
 
-    addRule(localAddress, localPort, targetAddress, targetPort) {
-        this.rules.push({
-            localAddress,
-            localPort,
-            targetAddress,
-            targetPort,
-        })
-    }
-
     connect() {
         this.client.on('ready', () => {
             // Create servers for all the local forwards.
-            this.rules.forEach((rule) => {
+            this.tunnel.rules.forEach((rule) => {
                 const server = require('net').createServer(sock => {
                     this.client.forwardOut(
                         sock.remoteAddress,
@@ -74,17 +59,22 @@ export class Client {
                 this.disconnected(this.id)
             }
         })
-
+        
+        console.log(this.tunnel)
+        
         this.client.connect({
-            host: this.hostname,
-            username: this.username,
-            privateKey: require('fs').readFileSync(this.privateKey),
-            port: this.port,
+            host: this.tunnel.hostname,
+            username: this.tunnel.username,
+            privateKey: require('fs').readFileSync(this.tunnel.privateKey),
+            port: this.tunnel.port,
         })
         
-        return () => {
-            this.client.end()
-            this.servers.forEach(server => server.close())
+        return {
+            id: Object.keys(this.tunnel)[0],
+            close() {
+                this.client.end()
+                this.servers.forEach(server => server.close())    
+            }
         }
     }
 }

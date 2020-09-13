@@ -1,4 +1,4 @@
-export class SshManager {
+export class SshCollection {
     constructor() {
         this.callbacks = []
     }

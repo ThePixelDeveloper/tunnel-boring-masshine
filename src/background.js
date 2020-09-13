@@ -1,6 +1,6 @@
 'use strict'
 
-import {app, BrowserWindow, protocol} from 'electron'
+import {app, BrowserWindow, protocol, Menu, Tray} from 'electron'
 import {createProtocol} from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, {VUEJS_DEVTOOLS} from 'electron-devtools-installer'
 import prepareIpc from './main/utils/ipc'
@@ -10,6 +10,7 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
+let tray
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -72,7 +73,10 @@ app.whenReady().then(async () => {
   }
 
   createWindow();
-  prepareIpc(win);
+
+  tray = new Tray('tunnel.png')
+  
+  prepareIpc(tray);
 })
 
 // Exit cleanly on request from parent process in development mode.
