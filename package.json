@@ -51,7 +51,7 @@
     "sass-loader": "^10.0.2",
     "spectron": "^11.0.0",
     "standard-version": "^9.0.0",
-    "tailwindcss": "^1.8.6",
+    "tailwindcss": "^1.8.9",
     "vue-cli-plugin-electron-builder": "~2.0.0-rc.4",
     "vue-template-compiler": "^2.6.12",
     "webpack": "^4.44.1"
