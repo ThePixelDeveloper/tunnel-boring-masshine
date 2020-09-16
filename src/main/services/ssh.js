@@ -42,7 +42,7 @@ export class Client {
                 // Start proxying and call the connected callback.
                 server.listen(rule.localPort, rule.localAddress, () => {
                     if (typeof this.connected === "function") {
-                        this.connected(this.id)
+                        this.connected(this.tunnel.id)
                     }
                 })
             })
@@ -50,18 +50,16 @@ export class Client {
 
         this.client.on('error', (error) => {
             if (typeof this.error === "function") {
-                this.error(this.id, error)
+                this.error(this.tunnel.id, error)
             }
         })
 
         this.client.on('end', () => {
             if (typeof this.disconnected === "function") {
-                this.disconnected(this.id)
+                this.disconnected(this.tunnel.id)
             }
         })
-        
-        console.log(this.tunnel)
-        
+
         this.client.connect({
             host: this.tunnel.hostname,
             username: this.tunnel.username,
@@ -70,7 +68,7 @@ export class Client {
         })
         
         return {
-            id: Object.keys(this.tunnel)[0],
+            id: this.tunnel.id,
             close() {
                 this.client.end()
                 this.servers.forEach(server => server.close())    

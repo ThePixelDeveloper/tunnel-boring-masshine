@@ -3,8 +3,8 @@ export class SshCollection {
         this.callbacks = []
     }
 
-    registerDisconnectCallback(id, disconnect) {
-        this.callbacks.push({id, disconnect})
+    registerDisconnectCallback(payload) {
+        this.callbacks.push(payload)
     }
     
     isConnected(id) {
@@ -14,7 +14,7 @@ export class SshCollection {
     callDisconnectCallback(id) {
         this.callbacks.forEach((callback, index) => {
             if (id === callback.id) {
-                callback.disconnect(id)
+                callback.close()
                 this.callbacks.splice(index, 1)
             }
         })

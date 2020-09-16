@@ -1,9 +1,9 @@
 <template>
     <div class="w-56 flex flex-col border-r bg-gray-100 h-screen">
 
-        <router-link :to="'/tunnel/'+key"
+        <router-link :to="'/tunnel/'+tunnel.id"
                      class="flex flex-row px-5 py-2 items-center border-b hover:bg-gray-300"
-                     v-for="(tunnel, key) in this.$store.state.tunnels" :key="key">
+                     v-for="tunnel in this.$store.state.tunnels" :key="tunnel.id">
             <div class="flex-initial">
             <span v-bind:class="{'text-green-500': tunnel.status==='Connected', 'text-orange-500': tunnel.status==='Connecting' || tunnel.status==='Disconnecting', 'text-red-600': tunnel.status==='Disconnected'}">
               <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16"><path

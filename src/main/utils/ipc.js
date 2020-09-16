@@ -6,7 +6,7 @@ const os = require("os");
 
 const sshManager = new SshCollection();
 
-function connect(event, id, tunnel) {
+function connect(event, tunnel) {
     const client = new Client(tunnel)
 
     // Event handlers
@@ -21,10 +21,7 @@ function connect(event, id, tunnel) {
 export default (tray) => {
 
     ipcMain.on('connect', (event, tunnel) => {
-        for (const [id, tunnel] of Object.entries(tunnel)) {
-            connect(event, id, tunnel)    
-        }
-        
+        connect(event, tunnel)
     })
 
     ipcMain.on('disconnect', (event, id) => {
@@ -37,15 +34,15 @@ export default (tray) => {
     
     ipcMain.on('tray', (event, tunnels) => {
         let trayItems = []
-        
-        for (const [id, tunnel] of Object.entries(tunnels)) {
+
+        tunnels.forEach((tunnel) => {
             trayItems.push({
                 label: tunnel.name,
                 icon: tunnel.status.toLowerCase()+".png",
-                click: () => connect(event, {[id]: tunnel}),
+                click: () => connect(event, tunnel),
             })
-        }
-        
+        })
+
         tray.setToolTip('This is my application.')
         tray.setContextMenu(Menu.buildFromTemplate(
             [

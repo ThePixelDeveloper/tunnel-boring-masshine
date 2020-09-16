@@ -26,15 +26,11 @@
             TunnelForm,
         },
         methods: {
-            handleSubmit(payload) {
-                const id = uuidv4();
+            handleSubmit(tunnel) {
+                tunnel.id = uuidv4();
 
-                this.$store.commit('createTunnel', {
-                    id: id,
-                    tunnel: payload,
-                })
-
-                this.$router.push('/tunnel/' + id)
+                this.$store.commit('createTunnel', tunnel)
+                this.$router.push('/tunnel/' + tunnel.id)
             }
         }
     }
