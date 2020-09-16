@@ -1,22 +1,30 @@
 export class SshCollection {
     constructor() {
         this.callbacks = []
+        this.clients = []
     }
 
-    registerDisconnectCallback(payload) {
-        this.callbacks.push(payload)
+    registerClient(client) {
+        this.clients.push(client)
     }
-    
+
     isConnected(id) {
-        return this.callbacks.find((callback) => callback.id === id) !== undefined
+        const client = this.clients.find((client) => id === client.id)
+
+        if (client === undefined) {
+            return
+        }
+
+        return client.isConnected();
     }
 
-    callDisconnectCallback(id) {
-        this.callbacks.forEach((callback, index) => {
-            if (id === callback.id) {
-                callback.close()
-                this.callbacks.splice(index, 1)
-            }
-        })
+    disconnect(id) {
+        const client = this.clients.find((client) => id === client.id)
+
+        if (client === undefined) {
+            return
+        }
+
+        client.disconnect();
     }
 }

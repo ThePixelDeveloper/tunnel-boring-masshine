@@ -14,8 +14,11 @@ function connect(event, tunnel) {
     client.handleDisconnected((id) => event.sender.send('disconnected', id))
     client.handleError( (id, error) => event.sender.send('error', id, error))
 
-    // Start the tunneling and register the disconnect func.
-    sshManager.registerDisconnectCallback(client.connect());
+    // Start the tunnelling.
+    client.connect()
+
+    // and register the client
+    sshManager.registerClient(tunnel.id, client)
 }
 
 export default (tray) => {
@@ -25,7 +28,7 @@ export default (tray) => {
     })
 
     ipcMain.on('disconnect', (event, id) => {
-        sshManager.callDisconnectCallback(id)
+        sshManager.disconnect(id)
     })
 
     ipcMain.on('isConnected', (event, id) => {

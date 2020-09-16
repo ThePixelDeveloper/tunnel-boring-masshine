@@ -35,7 +35,7 @@
         },
         computed: {
             tunnel() {
-                return this.$store.state.tunnels[this.$route.params.id]
+                return this.$store.getters.findTunnel(this.$route.params.id)
             }
         },
         methods: {

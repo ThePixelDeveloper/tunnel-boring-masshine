@@ -5,18 +5,30 @@ export class Client {
         this.tunnel = tunnel
         this.client = new SSH()
         this.servers = []
+        this.connected = false
     }
 
     handleConnected(handler) {
-        this.connected = handler;
+        this.connectedHandler = handler;
     }
 
     handleDisconnected(handler) {
-        this.disconnected = handler
+        this.disconnectedHandler = handler
     }
 
     handleError(handler) {
-        this.error = handler
+        this.errorHandler = handler
+    }
+
+    isConnected() {
+        return this.connected
+    }
+
+    disconnect() {
+        if (this.isConnected()) {
+            this.client.end()
+            this.servers.forEach(server => server.close())
+        }
     }
 
     connect() {
@@ -41,23 +53,27 @@ export class Client {
 
                 // Start proxying and call the connected callback.
                 server.listen(rule.localPort, rule.localAddress, () => {
-                    if (typeof this.connected === "function") {
-                        this.connected(this.tunnel.id)
+                    if (typeof this.connectedHandler === "function") {
+                        this.connectedHandler(this.tunnel.id)
                     }
+
+                    this.connected = true
                 })
             })
         })
 
         this.client.on('error', (error) => {
-            if (typeof this.error === "function") {
-                this.error(this.tunnel.id, error)
+            if (typeof this.errorHandler === "function") {
+                this.errorHandler(this.tunnel.id, error)
             }
+            this.connected = false
         })
 
         this.client.on('end', () => {
-            if (typeof this.disconnected === "function") {
-                this.disconnected(this.tunnel.id)
+            if (typeof this.disconnectedHandler === "function") {
+                this.disconnectedHandler(this.tunnel.id)
             }
+            this.connected = false
         })
 
         this.client.connect({
@@ -66,13 +82,5 @@ export class Client {
             privateKey: require('fs').readFileSync(this.tunnel.privateKey),
             port: this.tunnel.port,
         })
-        
-        return {
-            id: this.tunnel.id,
-            close() {
-                this.client.end()
-                this.servers.forEach(server => server.close())    
-            }
-        }
     }
 }
