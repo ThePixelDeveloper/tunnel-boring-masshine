@@ -1,38 +1,40 @@
-import {app, ipcMain, dialog, Menu} from "electron";
-import {Client} from "../services/ssh";
+import {app, dialog, ipcMain, Menu} from "electron";
 import {SshCollection} from "../services/ssh-collection";
 
 const os = require("os");
 
-const sshManager = new SshCollection();
-
-function connect(event, tunnel) {
-    const client = new Client(tunnel)
-
-    // Event handlers
-    client.handleConnected((id) => event.sender.send('connected', id))
-    client.handleDisconnected((id) => event.sender.send('disconnected', id))
-    client.handleError( (id, error) => event.sender.send('error', id, error))
-
-    // Start the tunnelling.
-    client.connect()
-
-    // and register the client
-    sshManager.registerClient(tunnel.id, client)
-}
+const sshCollection = new SshCollection();
 
 export default (tray) => {
 
+    ipcMain.on('register', (event, tunnel) => {
+        function disconnected(id) {
+            return event.sender.send('disconnected', id);
+        }
+
+        function error(id, error) {
+            return event.sender.send('error', id, error);
+        }
+
+        function connected(id) {
+            return event.sender.send('connected', id);
+        }
+
+        sshCollection.register(tunnel, connected, disconnected, error)
+    })
+
     ipcMain.on('connect', (event, tunnel) => {
-        connect(event, tunnel)
+        sshCollection.connect(tunnel)
     })
 
-    ipcMain.on('disconnect', (event, id) => {
-        sshManager.disconnect(id)
+    ipcMain.on('disconnect', (event, tunnel) => {
+        sshCollection.disconnect(tunnel)
     })
 
-    ipcMain.on('isConnected', (event, id) => {
-        event.sender.send('isConnected.response', sshManager.isConnected(id))
+    ipcMain.on('isConnected', (event, tunnel) => {
+        event.sender.send('isConnected.response',
+            sshCollection.isConnected(tunnel),
+        )
     })
     
     ipcMain.on('tray', (event, tunnels) => {
@@ -42,7 +44,7 @@ export default (tray) => {
             trayItems.push({
                 label: tunnel.name,
                 icon: tunnel.status.toLowerCase()+".png",
-                click: () => connect(event, tunnel),
+                click: () => sshCollection.connect(tunnel),
             })
         })
 
@@ -76,6 +78,8 @@ export default (tray) => {
 
         try {
             await require('fs').promises.access(path)
+
+            console.log(JSON.parse(await require('fs').promises.readFile(path, 'utf-8')))
 
             event.sender.send('config.read.response', JSON.parse(await require('fs').promises.readFile(path, 'utf-8')))
         } catch (e) {

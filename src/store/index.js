@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import ipc from '../renderer/utils/ipc'
-import {find, findIndex} from 'lodash'
+import {find, findIndex, map} from 'lodash'
+import {loadTunnelStatus} from "../renderer/utils/status";
 
 const _ = require('lodash');
 
@@ -32,7 +33,12 @@ export default new Vuex.Store({
 
         // Updates
         updateTunnel(state, {id, tunnel}) {
-            state.tunnels.splice(findTunnelIndex(state, id), tunnel)
+            Vue.set(state.tunnels, findTunnelIndex(state, id), _.extend({}, findTunnel(state,id), tunnel))
+        },
+
+        // Replaces
+        replaceTunnels(state, tunnels) {
+            state.tunnels = tunnels
         },
 
         // Connection status
@@ -78,22 +84,27 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        loadConfig({commit}, tunnels) {
-            _.map(tunnels, async (tunnel) => {
-                tunnel.status = await ipc.isConnected(tunnel.id) ? 'Connected' : 'Disconnected'
-                commit('createTunnel', tunnel);
-            })
+        async loadConfig({commit}, tunnels) {
+            commit('replaceTunnels', await Promise.all(map(tunnels, loadTunnelStatus)))
         },
-        connect({state, commit}, id) {
-            commit('connecting', id)
+        connect({commit}, tunnel) {
+            if (tunnel.status === "Connecting") {
+                return
+            }
+
+            commit('connecting', tunnel.id)
             ipc.connected((id) => commit('connected', id))
             ipc.error((id) => commit('disconnected', id))
-            ipc.connect(findTunnel(state, id))
+            ipc.connect(tunnel)
         },
-        disconnect({commit}, id) {
-            commit('disconnecting', id)
+        disconnect({commit}, tunnel) {
+            if (tunnel.status === "Disconnecting") {
+                return
+            }
+
+            commit('disconnecting', tunnel.id)
             ipc.disconnected((id) => commit('disconnected', id))
-            ipc.disconnect(id)
+            ipc.disconnect(tunnel)
         },
     },
 })

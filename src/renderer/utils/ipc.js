@@ -22,6 +22,10 @@ const isConnected = (id) => {
     });
 }
 
+const register = (tunnel) => {
+    window.ipc.send('register', tunnel)
+}
+
 const connect = (tunnel) => {
     window.ipc.send('connect', tunnel);
 };
@@ -30,8 +34,8 @@ const connected = (handler) => {
     window.ipc.on('connected', (event, ...args) => handler(...args))
 }
 
-const disconnect = (id) => {
-    window.ipc.send('disconnect', id)
+const disconnect = (tunnel) => {
+    window.ipc.send('disconnect', tunnel)
 }
 
 const disconnected = (handler) => {
@@ -58,6 +62,7 @@ export default {
     privateKeyDialog,
     isConnected,
     tray,
+    register,
     connect,
     connected,
     disconnect,

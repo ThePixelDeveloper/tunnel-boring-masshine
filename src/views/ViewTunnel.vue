@@ -1,5 +1,5 @@
 <template>
-    <div class="view-tunnel">
+    <div class="view-tunnel" v-if="tunnel">
         <div class="flex flex-col overflow-y-auto h-screen">
             <div class="p-3 pl-5 pr-5 border-b border-dashed">
                 <h1 class="text-4xl font-medium">{{tunnel.name}}</h1>
@@ -108,10 +108,10 @@
         },
         methods: {
             connect() {
-                this.$store.dispatch('connect', this.$route.params.id)
+                this.$store.dispatch('connect', this.tunnel)
             },
             disconnect() {
-                this.$store.dispatch('disconnect', this.$route.params.id)
+                this.$store.dispatch('disconnect', this.tunnel)
             },
             remove() {
                 this.$store.commit('removeTunnel', this.$route.params.id)

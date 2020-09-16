@@ -1,30 +1,38 @@
+import {Client} from "./ssh";
+import {set, get, has} from "lodash";
+
 export class SshCollection {
     constructor() {
-        this.callbacks = []
-        this.clients = []
+        this.clients = {}
     }
 
-    registerClient(client) {
-        this.clients.push(client)
+    register(tunnel, connected, disconnected, error) {
+        const client = new Client(tunnel)
+
+        client.handleConnected(connected)
+        client.handleDisconnected(disconnected)
+        client.handleError(error)
+
+        set(this.clients, tunnel.id, client)
     }
 
-    isConnected(id) {
-        const client = this.clients.find((client) => id === client.id)
+    connect(tunnel) {
+        if (has(this.clients, tunnel.id)) {
+            get(this.clients, tunnel.id).connect();
+        }
+    }
 
-        if (client === undefined) {
-            return
+    disconnect(tunnel) {
+        if (has(this.clients, tunnel.id)) {
+            get(this.clients, tunnel.id).disconnect();
+        }
+    }
+
+    isConnected(tunnel) {
+        if (!has(this.clients, tunnel.id)) {
+            return false
         }
 
-        return client.isConnected();
-    }
-
-    disconnect(id) {
-        const client = this.clients.find((client) => id === client.id)
-
-        if (client === undefined) {
-            return
-        }
-
-        client.disconnect();
+        return get(this.clients, tunnel.id).isConnected();
     }
 }
