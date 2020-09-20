@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import ipc from '../renderer/utils/ipc'
+import {get} from 'lodash'
 
 const _ = require('lodash');
 
@@ -56,6 +57,7 @@ export default new Vuex.Store({
         config(state) {
             return _.mapValues(state.tunnels, (t) => {
                 return _.pick(t, [
+                    "autoconnect",
                     "name",
                     "username",
                     "hostname",
@@ -67,14 +69,20 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        loadConfig({commit}, config) {
+        loadConfig({commit, dispatch}, config) {
             Object.keys(config).forEach((id) => {
                 ipc.isConnected(id).then((isConnected) => {
                     config[id].status = isConnected ? 'Connected' : 'Disconnected'
                     commit('createTunnel', {
                         id: id,
                         tunnel: config[id],
-                    })    
+                    })
+
+
+
+                    if (!isConnected && get(config[id], 'autoconnect', false)) {
+                        dispatch('connect', id)
+                    }
                 })
             })
         },
