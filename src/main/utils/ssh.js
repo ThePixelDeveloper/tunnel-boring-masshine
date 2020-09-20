@@ -80,6 +80,7 @@ export class Client {
             username: this.username,
             privateKey: require('fs').readFileSync(this.privateKey),
             port: this.port,
+            keepaliveInterval: 60000,
         })
         
         return () => {
