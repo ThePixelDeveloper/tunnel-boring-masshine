@@ -47,14 +47,14 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "husky": "^4.3.0",
-    "sass": "^1.26.5",
+    "sass": "^1.26.11",
     "sass-loader": "^10.0.2",
     "spectron": "^11.0.0",
     "standard-version": "^9.0.0",
     "tailwindcss": "^1.8.10",
     "vue-cli-plugin-electron-builder": "~2.0.0-rc.4",
     "vue-template-compiler": "^2.6.12",
-    "webpack": "^4.44.1"
+    "webpack": "^4.44.2"
   },
   "husky": {
     "hooks": {

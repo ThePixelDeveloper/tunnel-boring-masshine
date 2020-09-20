@@ -73,7 +73,17 @@
                 </div>
             </div>
 
+            <div class="p-3 pl-5 pr-5 border-b border-dashed">
+                <div class="flex flex-row">
+                    <h2 class="w-1/5 text-sm font-bold">Connect on launch</h2>
+                    <div>
+                        <input type="checkbox" v-model="tunnel.autoconnect">
+                    </div>
+                </div>
+            </div>
+
             <div class="flex-grow"></div>
+
             <div class="bg-gray-200 px-5 text-white h-10 flex row">
                 <div class="flex items-center flex-grow">
                     <button @click="connect" v-if='tunnel.status !== "Connected"'

@@ -77,10 +77,11 @@ export class Client {
         })
 
         this.client.connect({
-            host: this.tunnel.hostname,
-            username: this.tunnel.username,
-            privateKey: require('fs').readFileSync(this.tunnel.privateKey),
-            port: this.tunnel.port,
+            host: this.hostname,
+            username: this.username,
+            privateKey: require('fs').readFileSync(this.privateKey),
+            port: this.port,
+            keepaliveInterval: 60000,
         })
     }
 }

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import ipc from '../renderer/utils/ipc'
-import {find, findIndex, map} from 'lodash'
+import {get, find, findIndex, map} from 'lodash'
 import {loadTunnelStatus} from "../renderer/utils/status";
 
 const _ = require('lodash');
@@ -73,6 +73,7 @@ export default new Vuex.Store({
             return _.map(state.tunnels, (t) => {
                 return _.pick(t, [
                     "id",
+                    "autoconnect",
                     "name",
                     "username",
                     "hostname",
@@ -84,8 +85,16 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        async loadConfig({commit}, tunnels) {
-            commit('replaceTunnels', await Promise.all(map(tunnels, loadTunnelStatus)))
+        async loadConfig({commit, dispatch}, tunnels) {
+            const replaceTunnels = await Promise.all(map(tunnels, loadTunnelStatus))
+
+            commit('replaceTunnels', replaceTunnels)
+
+            map(replaceTunnels, (tunnel) => {
+                if (get(tunnel, 'autoconnect')) {
+                    dispatch('connect', tunnel)
+                }
+            })
         },
         connect({commit}, tunnel) {
             if (tunnel.status === "Connecting") {
