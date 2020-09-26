@@ -53,6 +53,7 @@ export class Client {
 
                 // Start proxying and call the connected callback.
                 server.listen(rule.localPort, rule.localAddress, () => {
+                    
                     if (typeof this.connectedHandler === "function") {
                         this.connectedHandler(this.tunnel.id)
                     }

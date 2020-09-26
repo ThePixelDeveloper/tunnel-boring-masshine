@@ -36,7 +36,8 @@
                     return state.tunnels;
                 },
                 function (tunnels) {
-                    return map(tunnels, ipc.register);
+                    map(tunnels, ipc.register);
+                    ipc.tray(tunnels);
                 },
                 { deep: true }
             )
