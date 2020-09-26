@@ -77,7 +77,7 @@ export class Client {
         })
 
         this.client.connect({
-            host: this.tunnel.host,
+            host: this.tunnel.hostname,
             username: this.tunnel.username,
             privateKey: require('fs').readFileSync(this.tunnel.privateKey),
             port: this.tunnel.port,

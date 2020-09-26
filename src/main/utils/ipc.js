@@ -79,8 +79,6 @@ export default (tray) => {
         try {
             await require('fs').promises.access(path)
 
-            console.log(JSON.parse(await require('fs').promises.readFile(path, 'utf-8')))
-
             event.sender.send('config.read.response', JSON.parse(await require('fs').promises.readFile(path, 'utf-8')))
         } catch (e) {
             event.sender.send('config.read.response', e)
