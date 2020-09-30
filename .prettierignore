@@ -1,0 +1,7 @@
+# Ignore artifacts:
+.github
+.idea
+dist_electron
+docs
+node_modules
+src/assets
