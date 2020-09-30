@@ -1,5 +1,5 @@
 import { Menu } from "electron";
-import { set, values, remove } from "lodash";
+import { set, unset, values } from "lodash";
 
 export class AppTray {
   constructor(tray, sshCollection, ipc) {
@@ -12,50 +12,73 @@ export class AppTray {
     this.disconnected = [];
   }
 
-  setTooltip(tooltip) {
-    this.tray.setToolTip(tooltip);
-  }
-
-  update(tunnel) {
-    const status = tunnel.status.toLowerCase();
-
+  registerTunnel(tunnel) {
     // eslint-disable-next-line no-undef
-    const icon = __static + "/img/" + status + ".png";
+    const icon = __static + "/img/" + tunnel.status.toLowerCase() + ".png";
 
-    const click = function () {
-      this.sshCollection.isConnected(tunnel)
+    function clickHandler() {
+      return this.sshCollection.isConnected(tunnel)
         ? this.ipc.trayDisconnect(tunnel)
         : this.ipc.trayConnect(tunnel);
-    };
+    }
 
     set(this.tunnels, tunnel.id, {
       label: tunnel.name,
       icon: icon,
-      click: click.bind(this),
+      click: clickHandler.bind(this),
     });
+  }
 
-    if (status === "connected") {
-      this.connected.push({
+  updateConnectAll(tunnel) {
+    if (tunnel.status === "Connected") {
+      const clickHandler = function () {
+        return this.ipc.trayDisconnect(tunnel);
+      };
+
+      set(this.connected, tunnel.id, {
         id: tunnel.id,
-        disconnect: function () {
-          this.ipc.trayDisconnect(tunnel);
-        }.bind(this),
+        disconnect: clickHandler.bind(this),
       });
 
-      remove(this.disconnected, (item) => item.id === tunnel.id);
+      unset(this.disconnected, tunnel.id);
     }
+  }
 
-    if (status === "disconnected") {
-      this.disconnected.push({
+  updateDisconnectAll(tunnel) {
+    if (tunnel.status === "Disconnected") {
+      const clickHandler = function () {
+        return this.ipc.trayConnect(tunnel);
+      };
+
+      set(this.disconnected, tunnel.id, {
         id: tunnel.id,
-        connect: function () {
-          this.ipc.trayConnect(tunnel);
-        }.bind(this),
+        connect: clickHandler.bind(this),
       });
 
-      remove(this.connected, (item) => item.id === tunnel.id);
+      unset(this.connected, tunnel.id);
     }
+  }
 
+  connectAllEnabled() {
+    return values(this.disconnected).length > 0;
+  }
+
+  disconnectAllEnabled() {
+    return values(this.connected).length > 0;
+  }
+
+  connectAll() {
+    return values(this.disconnected).forEach((tunnel) => tunnel.connect());
+  }
+
+  disconnectAll() {
+    return values(this.connected).forEach((tunnel) => tunnel.disconnect());
+  }
+
+  update(tunnel) {
+    this.registerTunnel(tunnel);
+    this.updateConnectAll(tunnel);
+    this.updateDisconnectAll(tunnel);
     this.render();
   }
 
@@ -65,17 +88,13 @@ export class AppTray {
         ...[
           {
             label: "Connect All",
-            enabled: this.disconnected.length > 0,
-            click: function () {
-              this.disconnected.forEach((v) => v.connect());
-            }.bind(this),
+            enabled: this.connectAllEnabled(),
+            click: this.connectAll.bind(this),
           },
           {
             label: "Disconnect All ",
-            enabled: this.connected.length > 0,
-            click: function () {
-              this.connected.forEach((v) => v.disconnect());
-            }.bind(this),
+            enabled: this.disconnectAllEnabled(),
+            click: this.disconnectAll.bind(this),
           },
           {
             type: "separator",

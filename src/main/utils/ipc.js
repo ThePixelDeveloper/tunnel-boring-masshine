@@ -20,6 +20,8 @@ function registerHandlers(win, appTray, sshCollection) {
         event.sender.send("error", id, error);
       }
     );
+
+    event.sender.send("register.response");
   });
 
   ipcMain.on("connect", (event, tunnel) => {

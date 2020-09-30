@@ -8,15 +8,14 @@
 <script>
 import Sidebar from "./components/Sidebar";
 import ipc from "./renderer/utils/ipc";
-import {map} from "lodash";
+import {get} from 'lodash';
 
 export default {
   name: "App",
   components: { Sidebar },
   beforeCreate() {
     this.$store.dispatch("loadTunnels");
-  },
-  created() {
+    
     ipc.trayConnect((tunnel) => {
       this.$store.dispatch("connect", tunnel)
     })
@@ -24,44 +23,68 @@ export default {
     ipc.trayDisconnect((tunnel) => {
       this.$store.dispatch("disconnect", tunnel)
     })
-    
-    const loadStatus = (tunnel) => {
-      this.$store.dispatch("loadStatus", tunnel)
-    }
-    
-    const autoConnect = (tunnel) => {
-      this.$store.dispatch("autoConnect", tunnel)
-    }
 
-    this.$store.watch(
+    ipc.connected((id) => {
+      this.$store.commit("connected", id);
+    })
+
+    ipc.disconnected((id) => {
+      this.$store.commit("disconnected", id);
+    })
+
+    ipc.error((id) => {
+      this.$store.commit("disconnected", id);
+    })
+
+    this.tunnelsWatch = this.$store.watch(
       function (state) {
         return state.tunnels;
       },
-      function (tunnels) {
-        map(tunnels, ipc.register);
-        map(tunnels, loadStatus)
-        map(tunnels, autoConnect)
+      async (tunnels) => {
+        for (const tunnel of tunnels) {
+          // Register into the ssh collection
+          await ipc.register(tunnel);
+          
+          // Load connection state if already connected
+          if (await ipc.isConnected(tunnel)) {
+            this.$store.commit("connected", tunnel.id);
+          }
+
+          // Automatically connect if we need to.
+          if (
+              get(tunnel, "autoconnect") &&
+              get(tunnel, "status") === "Disconnected"
+          ) {
+            await this.$store.dispatch("connect", tunnel);
+          }
+        }
       }
     );
     
-    this.$store.watch(
+    this.configWatch = this.$store.watch(
         function(state, getters) {
           return getters.config
         },
         ipc.writeConfig
     )
-    
-    this.$store.watch(
-        function(state) {
-          return state.tunnels
+
+    this.trayWatch = this.$store.watch(
+        function (state) {
+          return state.tunnels;
         },
-        function(tunnels) {
-          map(tunnels, ipc.updateTray)
-        },
-        {
+        function (tunnels) {
+          for (const tunnel of tunnels) {
+            ipc.updateTray(tunnel)
+          }
+        }, {
           deep: true
         }
-    )
+    );
   },
+  beforeDestroy() {
+    this.tunnelsWatch();
+    this.trayWatch();
+    this.configWatch();
+  }
 };
 </script>

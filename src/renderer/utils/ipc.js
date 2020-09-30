@@ -1,6 +1,6 @@
 const privateKeyDialog = () => {
   return new Promise((resolve, reject) => {
-    window.ipc.on("privateKeyDialog.response", (event, arg) =>
+    window.ipc.once("privateKeyDialog.response", (event, arg) =>
       arg instanceof Error ? reject(arg) : resolve(arg)
     );
 
@@ -10,16 +10,22 @@ const privateKeyDialog = () => {
 
 const isConnected = (tunnel) => {
   return new Promise((resolve, reject) => {
-    window.ipc.on("isConnected.response", (event, arg) =>
-      arg instanceof Error ? reject(arg) : resolve(arg)
-    );
+    window.ipc.on("isConnected.response", (event, arg) => {
+      arg instanceof Error ? reject(arg) : resolve(arg);
+    });
 
     window.ipc.send("isConnected", tunnel);
   });
 };
 
 const register = (tunnel) => {
-  window.ipc.send("register", tunnel);
+  return new Promise((resolve, reject) => {
+    window.ipc.on("register.response", (event, arg) =>
+      arg instanceof Error ? reject(arg) : resolve(arg)
+    );
+
+    window.ipc.send("register", tunnel);
+  });
 };
 
 const connect = (tunnel) => {

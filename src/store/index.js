@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import ipc from "../renderer/utils/ipc";
-import { get, assign, map, find, findIndex } from "lodash";
+import { assign, map, find, findIndex } from "lodash";
 
 const _ = require("lodash");
 
@@ -97,25 +97,12 @@ export default new Vuex.Store({
         })
       );
     },
-    async loadStatus({ commit }, tunnel) {
-      console.log(await ipc.isConnected(tunnel));
-      (await ipc.isConnected(tunnel))
-        ? commit("connected", tunnel.id)
-        : commit("disconnected", tunnel.id);
-    },
-    autoConnect({ dispatch }, tunnel) {
-      if (get(tunnel, "autoconnect")) {
-        dispatch("connect", tunnel);
-      }
-    },
     connect({ commit }, tunnel) {
       if (tunnel.status === "Connecting") {
         return;
       }
 
       commit("connecting", tunnel.id);
-      ipc.connected((id) => commit("connected", id));
-      ipc.error((id) => commit("disconnected", id));
       ipc.connect(tunnel);
     },
     disconnect({ commit }, tunnel) {
@@ -124,7 +111,6 @@ export default new Vuex.Store({
       }
 
       commit("disconnecting", tunnel.id);
-      ipc.disconnected((id) => commit("disconnected", id));
       ipc.disconnect(tunnel);
     },
   },
