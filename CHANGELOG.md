@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/compare/v0.1.2...v0.1.4) (2020-10-02)
+
+
+### Features
+
+* autoconnect, closes [#22](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/issues/22) ([#47](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/issues/47)) ([31acc6f](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/commit/31acc6f9ef29efb1b712e5feb211e2fc48992e78))
+* cleanup readme ([#34](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/issues/34)) ([0b1ab3b](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/commit/0b1ab3b87210f757c6477a8b4c411730c7aa45f0))
+* keep alive interval, closes [#26](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/issues/26) ([#46](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/issues/46)) ([695db2c](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/commit/695db2c40c765bb4feb1c0dd60419a1907fa3ea6))
+* tray icon ([#45](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/issues/45)) ([ec12e48](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/commit/ec12e48f3088a935dfc37d796ba0cbc40bcd3c17))
+
+
+### Bug Fixes
+
+* handle the window being reloaded with CMD+R ([958ccea](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/commit/958ccea3f423cd96b68e7a0629e544351e989652))
+* new Buffer() security warning ([9cab807](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/commit/9cab8071a76d96c44ac23a93ab9f15f071fe5e67))
+* tailwindcss warnings ([eb24f2c](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/commit/eb24f2ceef40bf72f36b3ccf39108f24be18481d))
+* typo in package.json ([4b0e5c2](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/commit/4b0e5c299033d1971d15cc5139a11c7b3e62bfd6))
+
 ### [0.1.3](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/compare/v0.1.2...v0.1.3) (2020-09-09)
 
 ### Bug Fixes
