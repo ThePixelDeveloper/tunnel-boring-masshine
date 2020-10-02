@@ -9,7 +9,7 @@
           tag="button"
           class="mx-auto block bg-gray-200 py-2 px-4 rounded border font-medium"
           to="/new-tunnel"
-          >Create your first SSH Tunnel</router-link
+          >Create an SSH Tunnel</router-link
         >
       </div>
     </div>
