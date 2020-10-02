@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/compare/v0.1.4...v0.1.5) (2020-10-02)
+
+
+### Bug Fixes
+
+* kebab case the handle-submit event ([e501907](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/commit/e501907b5827d7e1745d00b4a9bb6862f2b2d116))
+
 ### [0.1.4](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/compare/v0.1.2...v0.1.4) (2020-10-02)
 
 
