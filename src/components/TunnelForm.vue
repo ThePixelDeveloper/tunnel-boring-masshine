@@ -331,7 +331,7 @@ export default {
         return;
       }
 
-      this.$emit("handleSubmit", this.tunnel);
+      this.$emit("handle-submit", this.tunnel);
     },
   },
 };

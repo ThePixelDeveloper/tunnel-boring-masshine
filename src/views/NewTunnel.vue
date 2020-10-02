@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col overflow-y-auto h-screen">
-    <TunnelForm v-on:handleSubmit="handleSubmit">
+    <TunnelForm v-on:handle-submit="handleSubmit">
       <div class="bg-gray-200 px-5 text-white py-2 flex flex-col">
         <div class="flex flex-row-reverse items-center flex-grow">
           <button
