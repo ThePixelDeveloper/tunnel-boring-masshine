@@ -12,18 +12,18 @@
 
 ## Abstract
 
-The Tunnel Boring MaSSHine makes it easy to manage your SSH tunnels.  
+The Tunnel Boring MaSSHine makes it easy to manage your SSH tunnels.
 
-No more forgetting what command line argument you need to run.  
+No more forgetting what command line argument you need to run.
 
-Go from running this:  
+Go from running this:
 
-``` bash
+```bash
 ssh -L 127.0.0.1:4646:10.0.1.2:4646 192.168.1.1 \
-    -o ServerAliveInterval=60 \ 
-    -o ServerAliveCountMax=3 
+    -o ServerAliveInterval=60 \
+    -o ServerAliveCountMax=3
 ```
 
-to having this:  
+to having this:
 
 <img src="./docs/tray.png" width="50%">

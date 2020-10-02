@@ -1,112 +1,117 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import ipc from '../renderer/utils/ipc'
-import {get} from 'lodash'
+import Vue from "vue";
+import Vuex from "vuex";
+import ipc from "../renderer/utils/ipc";
+import { assign, map, find, findIndex } from "lodash";
 
-const _ = require('lodash');
+const _ = require("lodash");
 
-Vue.use(Vuex)
+Vue.use(Vuex);
+
+function findTunnel(state, id) {
+  return find(state.tunnels, (tunnel) => tunnel.id === id);
+}
+
+function findTunnelIndex(state, id) {
+  return findIndex(state.tunnels, (tunnel) => tunnel.id === id);
+}
 
 export default new Vuex.Store({
-    state: {
-        tunnels: {},
+  state: {
+    tunnels: [],
+  },
+  mutations: {
+    // Creates
+    createTunnel(state, tunnel) {
+      Vue.set(state.tunnels, state.tunnels.length, tunnel);
     },
-    mutations: {
-        // Creates
-        createTunnel(state, {id, tunnel}) {
-            Vue.set(state.tunnels, id, tunnel)
-        },
 
-        // Removes
-        removeTunnel(state, id) {
-            Vue.delete(state.tunnels, id)
-        },
-        removeConnection(state, id) {
-            Vue.delete(state.tunnels[id], "connection")
-        },
-        removeServer(state, id) {
-            Vue.delete(state.tunnels[id], "server")
-        },
-
-        // Updates
-        updateTunnel(state, {id, tunnel}) {
-            Vue.set(state.tunnels, id, _.extend({}, state.tunnels[id], tunnel))
-        },
-
-        // Connection status
-        connecting(state, id) {
-            state.tunnels[id].status = "Connecting"
-        },
-        connected(state, id) {
-            state.tunnels[id].status = "Connected"
-        },
-        disconnecting(state, id) {
-            state.tunnels[id].status = "Disconnecting"
-        },
-        disconnected(state, id) {
-            state.tunnels[id].status = "Disconnected"
-        },
+    // Removes
+    removeTunnel(state, id) {
+      state.tunnels.splice(findTunnelIndex(state, id), 1);
     },
-    getters: {
-        count(state) {
-            return Object.keys(state.tunnels).length
-        },
-        first(state) {
-            return Object.keys(state.tunnels)[0]
-        },
-        config(state) {
-            return _.mapValues(state.tunnels, (t) => {
-                return _.pick(t, [
-                    "autoconnect",
-                    "name",
-                    "username",
-                    "hostname",
-                    "privateKey",
-                    "port",
-                    "rules",
-                ])
-            })
-        }
+
+    // Updates
+    updateTunnel(state, { id, tunnel }) {
+      Vue.set(
+        state.tunnels,
+        findTunnelIndex(state, id),
+        _.extend({}, findTunnel(state, id), tunnel)
+      );
     },
-    actions: {
-        loadConfig({commit, dispatch}, config) {
-            Object.keys(config).forEach((id) => {
-                ipc.isConnected(id).then((isConnected) => {
-                    config[id].status = isConnected ? 'Connected' : 'Disconnected'
-                    commit('createTunnel', {
-                        id: id,
-                        tunnel: config[id],
-                    })
 
-
-
-                    if (!isConnected && get(config[id], 'autoconnect', false)) {
-                        dispatch('connect', id)
-                    }
-                })
-            })
-        },
-        connect({state, commit}, id) {
-            const tunnel = state.tunnels[id]
-
-            commit('connecting', id)
-
-            ipc.connected((id) => commit('connected', id))
-            ipc.error((id) => commit('disconnected', id))
-            ipc.connect(
-                id,
-                tunnel.hostname,
-                tunnel.username,
-                tunnel.privateKey,
-                tunnel.port,
-                tunnel.rules,
-            )
-        },
-        disconnect({commit}, id) {
-            commit('disconnecting', id)
-
-            ipc.disconnected((id) => commit('disconnected', id))
-            ipc.disconnect(id)
-        },
+    // Replaces
+    setTunnels(state, tunnels) {
+      state.tunnels = tunnels;
     },
-})
+
+    // Connection status
+    connecting(state, id) {
+      findTunnel(state, id).status = "Connecting";
+    },
+    connected(state, id) {
+      findTunnel(state, id).status = "Connected";
+    },
+    disconnecting(state, id) {
+      findTunnel(state, id).status = "Disconnecting";
+    },
+    disconnected(state, id) {
+      findTunnel(state, id).status = "Disconnected";
+    },
+  },
+  getters: {
+    findTunnel(state) {
+      return (id) => findTunnel(state, id);
+    },
+    count(state) {
+      return state.tunnels.length;
+    },
+    first(state) {
+      return state.tunnels[0];
+    },
+    config(state) {
+      return _.map(state.tunnels, (t) => {
+        return _.pick(t, [
+          "id",
+          "autoconnect",
+          "name",
+          "username",
+          "hostname",
+          "privateKey",
+          "port",
+          "rules",
+        ]);
+      });
+    },
+  },
+  actions: {
+    async loadTunnels({ commit }) {
+      commit(
+        "setTunnels",
+        map(await ipc.readConfig(), (tunnel) => {
+          return assign(
+            {
+              status: "Disconnected",
+            },
+            tunnel
+          );
+        })
+      );
+    },
+    connect({ commit }, tunnel) {
+      if (tunnel.status === "Connecting") {
+        return;
+      }
+
+      commit("connecting", tunnel.id);
+      ipc.connect(tunnel);
+    },
+    disconnect({ commit }, tunnel) {
+      if (tunnel.status === "Disconnecting") {
+        return;
+      }
+
+      commit("disconnecting", tunnel.id);
+      ipc.disconnect(tunnel);
+    },
+  },
+});

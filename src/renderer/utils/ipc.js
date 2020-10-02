@@ -1,63 +1,91 @@
 const privateKeyDialog = () => {
-    return new Promise((resolve, reject) => {
-        window.ipc.on('privateKeyDialog.response', (event, arg) =>
-            arg instanceof Error ? reject(arg) : resolve(arg)
-        );
+  return new Promise((resolve, reject) => {
+    window.ipc.once("privateKeyDialog.response", (event, arg) =>
+      arg instanceof Error ? reject(arg) : resolve(arg)
+    );
 
-        window.ipc.send('privateKeyDialog');
+    window.ipc.send("privateKeyDialog");
+  });
+};
+
+const isConnected = (tunnel) => {
+  return new Promise((resolve, reject) => {
+    window.ipc.on("isConnected.response", (event, arg) => {
+      arg instanceof Error ? reject(arg) : resolve(arg);
     });
-}
 
-const isConnected = (id) => {
-    return new Promise((resolve, reject) => {
-        window.ipc.on('isConnected.response', (event, arg) =>
-          arg instanceof Error ? reject(arg) : resolve(arg)
-        );
+    window.ipc.send("isConnected", tunnel);
+  });
+};
 
-        window.ipc.send('isConnected', id);
-    });
-}
+const register = (tunnel) => {
+  return new Promise((resolve, reject) => {
+    window.ipc.on("register.response", (event, arg) =>
+      arg instanceof Error ? reject(arg) : resolve(arg)
+    );
 
-const connect = (id, hostname, username, privateKey, port, rules) => {
-    window.ipc.send('connect', id, hostname, username, privateKey, port, rules);
+    window.ipc.send("register", tunnel);
+  });
+};
+
+const connect = (tunnel) => {
+  window.ipc.send("connect", tunnel);
 };
 
 const connected = (handler) => {
-    window.ipc.on('connected', (event, ...args) => handler(...args))
-}
+  window.ipc.on("connected", (event, ...args) => handler(...args));
+};
 
-const disconnect = (id) => {
-    window.ipc.send('disconnect', id)
-}
+const disconnect = (tunnel) => {
+  window.ipc.send("disconnect", tunnel);
+};
 
 const disconnected = (handler) => {
-    window.ipc.on('disconnected', (event, ...args) => handler(...args))
-}
+  window.ipc.on("disconnected", (event, ...args) => handler(...args));
+};
 
 const error = (handler) => {
-    window.ipc.on('error', (event, ...args) => handler(...args))
-}
+  window.ipc.on("error", (event, ...args) => handler(...args));
+};
 
 const readConfig = () => {
-    return new Promise((resolve, reject) => {
-        window.ipc.once('config.read.response', (event, arg) =>
-            arg instanceof Error ? reject(arg) : resolve(arg)
-        );
+  return new Promise((resolve, reject) => {
+    window.ipc.once("config.read.response", (event, arg) =>
+      arg instanceof Error ? reject(arg) : resolve(arg)
+    );
 
-        window.ipc.send('config.read');
-    });
-}
+    window.ipc.send("config.read");
+  });
+};
 
-const writeConfig = (config) => window.ipc.send('config.write', config)
+const writeConfig = (config) => {
+  window.ipc.send("config.write", config);
+};
+
+const updateTray = (tunnel) => {
+  window.ipc.send("tray.update", tunnel);
+};
+
+const trayConnect = (handler) => {
+  window.ipc.on("tray.connect", (event, ...args) => handler(...args));
+};
+
+const trayDisconnect = (handler) => {
+  window.ipc.on("tray.disconnect", (event, ...args) => handler(...args));
+};
 
 export default {
-    privateKeyDialog,
-    isConnected,
-    connect,
-    connected,
-    disconnect,
-    disconnected,
-    error,
-    readConfig,
-    writeConfig,
-}
+  privateKeyDialog,
+  isConnected,
+  register,
+  connect,
+  connected,
+  disconnect,
+  disconnected,
+  error,
+  readConfig,
+  writeConfig,
+  updateTray,
+  trayConnect,
+  trayDisconnect,
+};
