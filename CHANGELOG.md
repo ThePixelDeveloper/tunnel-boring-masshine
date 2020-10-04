@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.7](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/compare/v0.1.6...v0.1.7) (2020-10-04)
+
+
+### Bug Fixes
+
+* incorrect placement of api_key_id and api_key_issuer_id ([2a4936a](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/commit/2a4936ae7d2e8f09a9eeb9c5fcf01c988a6e4643))
+
 ### [0.1.6](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/compare/v0.1.5...v0.1.6) (2020-10-04)
 
 
