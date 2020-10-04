@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/compare/v0.1.5...v0.1.6) (2020-10-04)
+
+
+### Features
+
+* mac code notorization ([0ed8b27](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/commit/0ed8b274dce79bf35f9180ced6ce21b687d7ddc1))
+* mac code signing ([f8041ca](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/commit/f8041ca3eee7fd06ae954e2b81079ad1d5421c88))
+
 ### [0.1.5](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/compare/v0.1.4...v0.1.5) (2020-10-02)
 
 
