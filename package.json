@@ -15,13 +15,6 @@
     "release": "standard-version"
   },
   "main": "background.js",
-  "build:": {
-    "afterSign": "electron-builder-notarize",
-    "mac": {
-      "hardenedRuntime": true,
-      "entitlements": "./node_modules/electron-builder-notarize/entitlements.mac.inherit.plist"
-    }
-  },
   "dependencies": {
     "chai-as-promised": "^7.1.1",
     "core-js": "^3.6.5",
