@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.8](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/compare/v0.1.7...v0.1.8) (2020-10-04)
+
+
+### Bug Fixes
+
+* incorrect placement of the electron builder properties ([0776820](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/commit/07768206d10ba3415f770f15b110de7adcb13b5d))
+
 ### [0.1.7](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/compare/v0.1.6...v0.1.7) (2020-10-04)
 
 
