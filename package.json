@@ -57,7 +57,7 @@
     "tailwindcss": "^1.8.12",
     "vue-cli-plugin-electron-builder": "~2.0.0-rc.4",
     "vue-template-compiler": "^2.6.12",
-    "webpack": "^4.44.2"
+    "webpack": "^5.0.0"
   },
   "husky": {
     "hooks": {
