@@ -26,7 +26,7 @@
     "vue": "^2.6.12",
     "vue-router": "^3.4.9",
     "vuelidate": "^0.7.6",
-    "vuex": "^3.4.0"
+    "vuex": "^3.6.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
