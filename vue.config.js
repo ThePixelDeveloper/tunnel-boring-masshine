@@ -8,6 +8,9 @@ module.exports = {
         productName: "Tunnel Boring MaSSHine",
         copyright: "Copyright © 2020 Mathew Davies",
         afterSign: "electron-builder-notarize",
+        linux: {
+          target: "AppImage"
+        },
         mac: {
           hardenedRuntime: true,
           category: "public.app-category.developer-tools",
