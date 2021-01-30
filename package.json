@@ -26,7 +26,7 @@
     "ssh2": "^0.8.9",
     "streamsearch": "https://github.com/aprilcoskun/streamsearch.git",
     "vue": "^2.6.12",
-    "vue-router": "^3.4.9",
+    "vue-router": "^3.5.1",
     "vuelidate": "^0.7.6",
     "vuex": "^3.6.0"
   },
@@ -49,7 +49,7 @@
     "electron-builder-notarize": "^1.2.0",
     "electron-devtools-installer": "^3.1.1",
     "eslint": "^6.8.0",
-    "eslint-plugin-vue": "^7.4.0",
+    "eslint-plugin-vue": "^7.5.0",
     "husky": "^4.3.6",
     "prettier": "2.2.1",
     "sass": "^1.30.0",
@@ -59,7 +59,7 @@
     "tailwindcss": "^1.9.6",
     "vue-cli-plugin-electron-builder": "~2.0.0-rc.5",
     "vue-template-compiler": "^2.6.12",
-    "webpack": "^5.11.0"
+    "webpack": "^5.18.0"
   },
   "husky": {
     "hooks": {
