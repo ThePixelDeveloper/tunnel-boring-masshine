@@ -26,7 +26,7 @@
     "ssh2": "^0.8.9",
     "streamsearch": "https://github.com/aprilcoskun/streamsearch.git",
     "vue": "^2.6.12",
-    "vue-router": "^3.4.9",
+    "vue-router": "^3.5.1",
     "vuelidate": "^0.7.6",
     "vuex": "^3.6.0"
   },
