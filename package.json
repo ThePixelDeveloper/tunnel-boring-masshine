@@ -43,7 +43,7 @@
     "@vue/cli-service": "~4.5.12",
     "@vue/test-utils": "^1.1.2",
     "babel-eslint": "^10.1.0",
-    "chai": "^4.1.2",
+    "chai": "^4.3.4",
     "electron": "^11.1.1",
     "electron-builder": "^22.9.1",
     "electron-builder-notarize": "^1.2.0",
