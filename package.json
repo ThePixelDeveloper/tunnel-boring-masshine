@@ -67,7 +67,8 @@
     }
   },
   "resolutions": {
-    "ssh2-streams/streamsearch": "https://github.com/aprilcoskun/streamsearch.git"
+    "ssh2-streams/streamsearch": "https://github.com/aprilcoskun/streamsearch.git",
+    "vue-cli-plugin-electron-builder/electron-builder": "=22.10.5"
   },
   "peerDependencies": {}
 }
