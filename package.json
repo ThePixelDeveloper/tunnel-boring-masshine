@@ -2,7 +2,7 @@
   "name": "tunnel-boring-masshine",
   "description": "Access remote server software, on your computer.",
   "author": "Mathew Davies",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "private": true,
   "scripts": {
     "serve": "echo \"Doesn't apply to this project, use electron:serve instead.\"",

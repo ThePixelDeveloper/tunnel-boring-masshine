@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.11](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/compare/v0.1.10...v0.1.11) (2021-05-08)
+
+
+### Features
+
+* increase the pr limit from 5 to 10 ([#168](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/issues/168)) ([5d4cc99](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/commit/5d4cc99882766c4644cad90c3bebb544e42ad2d3))
+
 ### [0.1.10](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/compare/v0.1.9...v0.1.10) (2020-11-30)
 
 ### [0.1.9](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/compare/v0.1.8...v0.1.9) (2020-11-29)
