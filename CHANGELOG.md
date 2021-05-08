@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.14](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/compare/v0.1.13...v0.1.14) (2021-05-08)
+
+
+### Bug Fixes
+
+* dependencies with security problems ([ba721d1](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/commit/ba721d1307f0f9dea08816c9c494efecb876ceb2))
+
 ### [0.1.13](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/compare/v0.1.12...v0.1.13) (2021-05-08)
 
 ### [0.1.12](https://github.com/ThePixelDeveloper/tunnel-boring-masshine/compare/v0.1.11...v0.1.12) (2021-05-08)
