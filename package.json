@@ -23,7 +23,7 @@
     "lodash": "^4.17.21",
     "promise-timeout": "^1.3.0",
     "register-service-worker": "^1.7.2",
-    "ssh2": "^0.8.9",
+    "ssh2": "^1.2.0",
     "streamsearch": "https://github.com/aprilcoskun/streamsearch.git",
     "vue": "^2.6.12",
     "vue-router": "^3.5.1",
