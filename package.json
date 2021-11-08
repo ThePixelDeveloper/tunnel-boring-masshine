@@ -52,7 +52,7 @@
     "eslint-plugin-vue": "^8.0.3",
     "husky": "^6.0.0",
     "prettier": "2.4.1",
-    "sass": "^1.34.0",
+    "sass": "^1.43.4",
     "sass-loader": "^12.3.0",
     "spectron": "^15.0.0",
     "standard-version": "^9.3.0",
