@@ -27,7 +27,7 @@
     "streamsearch": "https://github.com/aprilcoskun/streamsearch.git",
     "vue": "^2.6.14",
     "vue-router": "^3.5.3",
-    "vuelidate": "^0.7.6",
+    "vuelidate": "^0.7.7",
     "vuex": "^3.6.2"
   },
   "devDependencies": {
