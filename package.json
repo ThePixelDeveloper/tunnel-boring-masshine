@@ -54,7 +54,7 @@
     "prettier": "2.4.1",
     "sass": "^1.43.4",
     "sass-loader": "^12.3.0",
-    "spectron": "^15.0.0",
+    "spectron": "^19.0.0",
     "standard-version": "^9.3.2",
     "tailwindcss": "^1.9.6",
     "vue-cli-plugin-electron-builder": "~2.1.1",
