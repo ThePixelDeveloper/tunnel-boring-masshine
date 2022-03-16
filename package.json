@@ -34,7 +34,7 @@
     "@commitlint/cli": "^16.2.1",
     "@commitlint/config-conventional": "^16.2.1",
     "@vue/cli-plugin-babel": "~5.0.1",
-    "@vue/cli-plugin-e2e-cypress": "~4.5.15",
+    "@vue/cli-plugin-e2e-cypress": "~4.5.16",
     "@vue/cli-plugin-eslint": "~4.5.15",
     "@vue/cli-plugin-pwa": "~5.0.1",
     "@vue/cli-plugin-router": "~5.0.1",
