@@ -47,7 +47,7 @@
     "electron-builder": "=23.0.3",
     "electron-builder-notarize": "^1.4.0",
     "electron-devtools-installer": "^3.2.0",
-    "eslint": "^8.14.0",
+    "eslint": "^8.31.0",
     "eslint-plugin-vue": "^8.7.1",
     "husky": "^7.0.4",
     "prettier": "2.6.2",
